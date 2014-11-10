@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("YooPen.Framework")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("YooPoon.Framework")]
+[assembly: AssemblyDescription("Web Application base classes")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("YooPen.Framework")]
+[assembly: AssemblyCompany("YooPoon Co. Ltd.")]
+[assembly: AssemblyProduct("YooPoon.Framework")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
