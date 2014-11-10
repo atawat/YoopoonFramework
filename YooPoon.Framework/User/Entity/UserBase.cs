@@ -1,4 +1,5 @@
-﻿using YooPoon.Core.Data;
+﻿using System.Collections.Generic;
+using YooPoon.Core.Data;
 
 namespace YooPoon.Framework.User.Entity
 {
@@ -30,5 +31,10 @@ namespace YooPoon.Framework.User.Entity
         /// 加密密钥
         /// </summary>
         public string PasswordSalt { get; set; }
+
+        /// <summary>
+        /// 用户角色
+        /// </summary>
+        public virtual ICollection<UserRole> UserRoles { get; set; } 
     }
 }

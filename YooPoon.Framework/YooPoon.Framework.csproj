@@ -91,6 +91,7 @@
     <Compile Include="Authentication\Entity\Role.cs" />
     <Compile Include="Authentication\Entity\RolePermission.cs" />
     <Compile Include="Authentication\Entity\RoleStatus.cs" />
+    <Compile Include="Authentication\FormsAuthenticationService.cs" />
     <Compile Include="Authentication\IAuthenticationService.cs" />
     <Compile Include="Data\EfDataProviderManager.cs" />
     <Compile Include="Data\EfRepository.cs" />
@@ -102,10 +103,13 @@
     <Compile Include="DependencyRegistrar.cs" />
     <Compile Include="Email\SendEmail.cs" />
     <Compile Include="MVC\WorkContext.cs" />
+    <Compile Include="MVC\YpAuthorizeAttribute.cs" />
     <Compile Include="MVC\YpDependencyResolver.cs" />
     <Compile Include="MVC\YpHandleErrorAttribute.cs" />
     <Compile Include="MVC\YpMVCViewPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User\Entity\UserRole.cs" />
+    <Compile Include="User\IUserService.cs" />
     <Compile Include="User\Entity\UserBase.cs" />
     <Compile Include="User\PasswordHelper.cs" />
   </ItemGroup>
