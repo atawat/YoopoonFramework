@@ -19,6 +19,6 @@ namespace YooPoon.Framework.Authentication.Entity
         /// </summary>
         public string Description { get; set; }
 
-        public ICollection<RolePermission> RolePermissions { get; set; } 
+        public virtual ICollection<RolePermission> RolePermissions { get; set; } 
     }
 }

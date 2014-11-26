@@ -6,9 +6,9 @@ namespace YooPoon.Framework.Authentication.Entity
     {
         public int Id { get; set; }
 
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
 
-        public ControllerAction ControllerAction { get; set; }
+        public virtual ControllerAction ControllerAction { get; set; }
 
         public bool IsAllowed { get; set; }
     }

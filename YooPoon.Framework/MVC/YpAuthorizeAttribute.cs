@@ -13,15 +13,16 @@ namespace YooPoon.Framework.MVC
 
         private bool IsAllowed { get; set; }
 
-        public YpAuthorizeAttribute()
+        //public YpAuthorizeAttribute()
+        //{
+
+        //}
+
+        public override void OnAuthorization(AuthorizationContext filterContext)
         {
             var builder = new ContainerBuilder();
             var containerManager = new ContainerManager(builder.Build());
             WorkContext = containerManager.Resolve<IWorkContext>();
-        }
-
-        public override void OnAuthorization(AuthorizationContext filterContext)
-        {
             var user = WorkContext.CurrentUser as UserBase;
             //用户权限判断
             //获取 controller  名称        

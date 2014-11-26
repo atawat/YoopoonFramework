@@ -7,8 +7,8 @@ namespace YooPoon.Framework.User.Entity
     {
         public int Id { get; set; }
 
-        public UserBase User { get; set; }
+        public virtual UserBase User { get; set; }
 
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
     }
 }
