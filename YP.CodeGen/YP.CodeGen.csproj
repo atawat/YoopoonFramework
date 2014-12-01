@@ -77,9 +77,21 @@
     <None Include="DesignExcel\TestDb.xlsx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Yoopoon.Common\YooPoon.Common.csproj">
+      <Project>{a09e564c-ec00-4bfa-acfd-371b45abeeed}</Project>
+      <Name>YooPoon.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YooPoon.Core\YooPoon.Core.csproj">
       <Project>{9e9ecf02-0eec-449d-8756-e1515d9f8ec8}</Project>
       <Name>YooPoon.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.Data\YooPoon.Data.csproj">
+      <Project>{2c74c9cf-a131-49e2-99bf-717315b46b4b}</Project>
+      <Name>YooPoon.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.WebFramework\YooPoon.WebFramework.csproj">
+      <Project>{ae97a52e-b5f5-469d-95cb-94e14883ad01}</Project>
+      <Name>YooPoon.WebFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
