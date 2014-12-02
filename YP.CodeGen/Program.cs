@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using YP.CodeGen.Helper;
 
 namespace YP.CodeGen
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
+            string excelDirPath = Path.GetFullPath("./DesignExcel/");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("          优         优                      朋朋朋朋    朋朋朋朋");
             Console.WriteLine("        优           优   优                 朋    朋    朋    朋");
@@ -18,14 +18,30 @@ namespace YP.CodeGen
             Console.WriteLine("  优  优            优优                     朋    朋    朋    朋");
             Console.WriteLine("      优           优 优                     朋    朋    朋    朋");
             Console.WriteLine("      优          优  优                     朋朋朋朋    朋朋朋朋");
-            Console.WriteLine("      优         优    优                    朋    朋    朋    朋");
-            Console.WriteLine("      优        优     优                    朋    朋    朋    朋");
-            Console.WriteLine("      优       优      优    优              朋    朋    朋    朋");
-            Console.WriteLine("      优      优        优  优              朋  朋 朋   朋     朋");
-            Console.WriteLine("      优     优          优优             朋      朋  朋     朋朋");
+            Console.WriteLine("      优         优   优                     朋    朋    朋    朋");
+            Console.WriteLine("      优        优    优                     朋    朋    朋    朋");
+            Console.WriteLine("      优       优     优    优               朋    朋    朋    朋");
+            Console.WriteLine("      优      优       优  优               朋  朋 朋   朋     朋");
+            Console.WriteLine("      优     优         优优              朋      朋  朋     朋朋");
             Console.WriteLine("----------------------------代码生成器---------------------------");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.ReadLine();
+            //var files = Directory.GetFiles(excelDirPath);
+            var folder = new DirectoryInfo(excelDirPath);
+            var excelFile = folder.GetFiles("*.xlsx");
+            if (excelFile.Any())
+            {
+                Console.WriteLine("查找到的Excel设计文件如下:"+Environment.NewLine);
+                int i = 0;
+                foreach (var file in excelFile)
+                {
+                    Console.WriteLine(i+"…………"+file.Name);
+                }
+            }
+            Console.Write("请输入需要生成代码的文件序号：");
+            var index = Console.ReadLine();
+            if(string.IsNullOrEmpty(index))
+                return;
+            using (var helper = new ExcelHelper(excelFile[int.Parse(index)].FullName)) ;
         }
     }
 }
