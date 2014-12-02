@@ -129,7 +129,6 @@ namespace YooPoon.Data.EntityFramework
 
             var result = Database.SqlQuery<TEntity>(commandText, parameters).ToList();
 
-            //performance hack applied as described here - http://www.nopcommerce.com/boards/t/25483/fix-very-important-speed-improvement.aspx
             bool acd = Configuration.AutoDetectChangesEnabled;
             try
             {
