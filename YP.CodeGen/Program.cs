@@ -41,7 +41,10 @@ namespace YP.CodeGen
             var index = Console.ReadLine();
             if(string.IsNullOrEmpty(index))
                 return;
-            using (var helper = new ExcelHelper(excelFile[int.Parse(index)].FullName)) ;
+            using (var helper = new ExcelHelper(excelFile[int.Parse(index)].FullName))
+            {
+                var model = helper.CreateModels();
+            }
         }
     }
 }

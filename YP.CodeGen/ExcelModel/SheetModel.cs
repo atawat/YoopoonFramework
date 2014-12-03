@@ -7,6 +7,8 @@ namespace YP.CodeGen.ExcelModel
     {
         public string TableDescription { get; set; }
 
+        public string TabbleEnName { get; set; }
+
         public List<EntityModel> Entity { get; set; }
 
         public List<MappingModel> Mapping { get; set; }
