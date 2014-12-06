@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using YP.CodeGen.ExcelModel;
@@ -35,10 +34,12 @@ namespace YP.CodeGen.Helper
                 var worksheet = worksheetpart.Worksheet;
                 var sharedStringTablePart = _document.WorkbookPart.SharedStringTablePart;
                 var descriptionCell = worksheet.Descendants<Cell>().FirstOrDefault(c => c.CellReference.Value == "A1");
+                if (descriptionCell == null || string.IsNullOrWhiteSpace(GetValue(descriptionCell, sharedStringTablePart)))
+                    continue;
                 var model = new SheetModel
                 {
                     TabbleEnName = sheet.Name,
-                    TableDescription = descriptionCell == null?"":GetValue(descriptionCell,sharedStringTablePart),
+                    TableDescription = GetValue(descriptionCell,sharedStringTablePart),
                     Entity = new List<EntityModel>(),
                     Mapping = new List<MappingModel>(),
                     Search = new List<SearchModel>(),

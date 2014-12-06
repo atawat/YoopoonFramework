@@ -18,13 +18,17 @@ namespace YP.CodeGen.Helper
         public FileFactory(string projectName, string tableName)
         {
             _tableName = tableName;
-            _templatePath = Path.GetFullPath("/Templates/");
-            _outputPath = Path.GetFullPath("/Output/" + projectName + "/");
+            _templatePath = Path.GetFullPath("./Templates/");
+            _outputPath = Path.GetFullPath("./Output/" + projectName + "/");
         }
 
         public void RenderEntityFile(List<EntityModel> models)
         {
-            var entityOutputPath = _outputPath + "\\Entity\\" + _tableName + "Entity.cs";
+            if (!Directory.Exists(_outputPath + "Entity\\"))
+            {
+                Directory.CreateDirectory(_outputPath + "Entity\\");
+            }
+            var entityOutputPath = _outputPath + "Entity\\" + _tableName + "Entity.cs";
             var templateFileName = _templatePath + "Model.tt";
             var host = new CustomCmdLineHost();
             var engine = new Engine();
@@ -45,7 +49,11 @@ namespace YP.CodeGen.Helper
 
         public void RenderMappingFile(List<MappingModel> models)
         {
-            var entityOutputPath = _outputPath + "\\Mappings\\" + _tableName + "Mapping.cs";
+            if (!Directory.Exists(_outputPath + "Mappings\\"))
+            {
+                Directory.CreateDirectory(_outputPath + "Mappings\\");
+            }
+            var entityOutputPath = _outputPath + "Mappings\\" + _tableName + "Mapping.cs";
             var templateFileName = _templatePath + "Mapping.tt";
             var host = new CustomCmdLineHost();
             var engine = new Engine();

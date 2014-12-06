@@ -300,7 +300,8 @@ namespace YP.CodeGen.Host
             //This host will provide a new application domain each time the 
             //engine processes a text template.
             //-------------------------------------------------------------
-            return AppDomain.CreateDomain("Generation App Domain");
+            //return AppDomain.CreateDomain("Generation App Domain");
+            return AppDomain.CurrentDomain;
             //This could be changed to return the current appdomain, but new 
             //assemblies are loaded into this AppDomain on a regular basis.
             //If the AppDomain lasts too long, it will grow indefintely, 

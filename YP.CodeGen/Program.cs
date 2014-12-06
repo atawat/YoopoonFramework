@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using YP.CodeGen.ExcelModel;
 using YP.CodeGen.Helper;
 
 namespace YP.CodeGen
@@ -30,21 +31,49 @@ namespace YP.CodeGen
             var excelFile = folder.GetFiles("*.xlsx");
             if (excelFile.Any())
             {
-                Console.WriteLine("查找到的Excel设计文件如下:"+Environment.NewLine);
+                Console.WriteLine("查找到的Excel设计文件如下:" + Environment.NewLine);
                 int i = 0;
                 foreach (var file in excelFile)
                 {
-                    Console.WriteLine(i+"…………"+file.Name);
+                    Console.WriteLine(i + "…………" + file.Name);
                 }
             }
             Console.Write("请输入需要生成代码的文件序号：");
             var index = Console.ReadLine();
-            if(string.IsNullOrEmpty(index))
+            if (string.IsNullOrEmpty(index))
                 return;
+            var factModel = new WorkGroupModel
+            {
+                ProjectName = Path.GetFileNameWithoutExtension(excelFile[int.Parse(index)].FullName)
+            };
             using (var helper = new ExcelHelper(excelFile[int.Parse(index)].FullName))
             {
                 var model = helper.CreateModels();
+                factModel.Sheets = model;
             }
+            Console.WriteLine("模板读取完毕，开始生成代码");
+            if (CreateCodeFiles(factModel))
+                Console.WriteLine("代码生成完毕");
+        }
+
+        private static bool CreateCodeFiles(WorkGroupModel model)
+        {
+            try
+            {
+                foreach (var sheet in model.Sheets)
+                {
+                    var fac = new FileFactory(model.ProjectName, sheet.TabbleEnName);
+                    fac.RenderEntityFile(sheet.Entity);
+                    fac.RenderMappingFile(sheet.Mapping);
+                }
+                return true;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
         }
     }
 }

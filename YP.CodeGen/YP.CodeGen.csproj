@@ -62,6 +62,12 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>YP.CodeGen.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -104,29 +110,20 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Templates\Mapping.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Mapping.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="YP.CodeGen_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Yoopoon.Common\YooPoon.Common.csproj">
-      <Project>{a09e564c-ec00-4bfa-acfd-371b45abeeed}</Project>
-      <Name>YooPoon.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\YooPoon.Core\YooPoon.Core.csproj">
-      <Project>{9e9ecf02-0eec-449d-8756-e1515d9f8ec8}</Project>
-      <Name>YooPoon.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\YooPoon.Data\YooPoon.Data.csproj">
-      <Project>{2c74c9cf-a131-49e2-99bf-717315b46b4b}</Project>
-      <Name>YooPoon.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\YooPoon.WebFramework\YooPoon.WebFramework.csproj">
-      <Project>{ae97a52e-b5f5-469d-95cb-94e14883ad01}</Project>
-      <Name>YooPoon.WebFramework</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Output\" />
-    <Folder Include="Templates\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
