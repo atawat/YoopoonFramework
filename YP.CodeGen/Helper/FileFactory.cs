@@ -6,6 +6,7 @@ using System.Runtime.Remoting.Messaging;
 using Microsoft.VisualStudio.TextTemplating;
 using YP.CodeGen.Host;
 using YP.CodeGen.TemplateModel;
+using YP.CodeGen.Templates;
 
 namespace YP.CodeGen.Helper
 {
@@ -70,6 +71,18 @@ namespace YP.CodeGen.Helper
             {
                 Console.WriteLine(error.ToString());
             }
+        }
+
+        public void RenderEnumFile(List<EnumModel> models)
+        {
+            if (!Directory.Exists(_outputPath + "Entity\\"))
+            {
+                Directory.CreateDirectory(_outputPath + "Entity\\");
+            }
+            var enumTemplate = new EnumTemplate(models);
+            var output = enumTemplate.TransformText();
+            var outputPath = _outputPath + "Entity\\" +"Enum" + _tableName + ".cs";
+            File.WriteAllText(outputPath, output);
         }
     }
 }

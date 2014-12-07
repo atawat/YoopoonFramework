@@ -63,8 +63,9 @@ namespace YP.CodeGen
                 foreach (var sheet in model.Sheets)
                 {
                     var fac = new FileFactory(model.ProjectName, sheet.TabbleEnName);
-                    fac.RenderEntityFile(sheet.Entity);
-                    fac.RenderMappingFile(sheet.Mapping);
+                    //fac.RenderEntityFile(sheet.Entity);
+                    //fac.RenderMappingFile(sheet.Mapping);
+                    fac.RenderEnumFile(sheet.Enums);
                 }
                 return true;
             }

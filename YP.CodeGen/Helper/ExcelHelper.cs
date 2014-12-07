@@ -80,10 +80,22 @@ namespace YP.CodeGen.Helper
                             entity[index].Type = type;
                             if (type.StartsWith("Enum"))
                             {
-                                enums.Add(new EnumModel
+                                var description = GetValue(row.Descendants<Cell>().Where(c => c.CellReference.Value.StartsWith("K")).First(), stringTablePart);
+                                if (!string.IsNullOrEmpty(description))
                                 {
-                                    EnumName = type
-                                });
+                                    enums.Add(new EnumModel
+                                    {
+                                        EnumName = type,
+                                        Values = description.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries).Select(v =>{ 
+                                            var splitValue = v.Split(':');
+                                            return new EnumValueModel
+                                            {
+                                                Attribute = splitValue[0],
+                                                Description = splitValue[1]
+                                            };
+                                        }).ToList()
+                                    });
+                                }
                             }
                             break;
                         case "H":
@@ -108,7 +120,7 @@ namespace YP.CodeGen.Helper
                                 });
                             }
                             break;
-                        case "K":
+                        case "J":
                             entity[index].Description = GetValue(cell, stringTablePart);
                             break;
                         default:
