@@ -120,6 +120,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IServiceTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="Templates\IServiceTemplatePartial.cs" />
     <Compile Include="Templates\MappingTemplatePartial.cs" />
     <Compile Include="Templates\MappingTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -137,6 +138,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ServiceTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="Templates\ServiceTemplatePartial.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

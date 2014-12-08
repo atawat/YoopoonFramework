@@ -18,7 +18,7 @@ namespace YP.CodeGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+    #line 1 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class IServiceTemplate : IServiceTemplateBase
     {
@@ -28,6 +28,119 @@ namespace YP.CodeGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
+            this.Write("using System.Linq;\r\nusing ");
+            
+            #line 7 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
+            
+            #line default
+            #line hidden
+            this.Write(".Entity.Model;\r\nusing YooPen.Core.Autofac;\r\n\r\nnamespace ");
+            
+            #line 10 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
+            
+            #line default
+            #line hidden
+            this.Write(".Service.");
+            
+            #line 10 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n{\r\n\tpublic interface I");
+            
+            #line 12 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Services : IDependency\r\n\t{\r\n\t\t");
+            
+            #line 14 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity Create (");
+            
+            #line 14 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity entity);\r\n\r\n\t\tbool Delete(");
+            
+            #line 16 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity entity);\r\n\r\n\t\t");
+            
+            #line 18 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity Update (");
+            
+            #line 18 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity entity);\r\n\r\n\t\t");
+            
+            #line 20 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity Get");
+            
+            #line 20 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("ById (int id);\r\n\r\n\t\tIQueryable<");
+            
+            #line 22 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity> Get");
+            
+            #line 22 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("sByCondition(");
+            
+            #line 22 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("SeachCondition condition);\r\n\r\n\t\tint Get");
+            
+            #line 24 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Count (");
+            
+            #line 24 "F:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("SeachCondition condition);\r\n\t}\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

@@ -3,3 +3,24 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+using System.Linq;
+using <#=_projectName#>.Entity.Model;
+using YooPen.Core.Autofac;
+
+namespace <#=_projectName#>.Service.<#=_entityName#>
+{
+	public interface I<#=_entityName#>Services : IDependency
+	{
+		<#=_entityName#>Entity Create (<#=_entityName#>Entity entity);
+
+		bool Delete(<#=_entityName#>Entity entity);
+
+		<#=_entityName#>Entity Update (<#=_entityName#>Entity entity);
+
+		<#=_entityName#>Entity Get<#=_entityName#>ById (int id);
+
+		IQueryable<<#=_entityName#>Entity> Get<#=_entityName#>sByCondition(<#=_entityName#>SeachCondition condition);
+
+		int Get<#=_entityName#>Count (<#=_entityName#>SeachCondition condition);
+	}
+}
