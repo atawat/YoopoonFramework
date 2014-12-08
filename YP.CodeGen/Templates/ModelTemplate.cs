@@ -12,13 +12,14 @@ namespace YP.CodeGen.Templates
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
+    using YP.CodeGen.TemplateModel;
     using System;
     
     /// <summary>
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "F:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
+    #line 1 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class ModelTemplate : ModelTemplateBase
     {
@@ -28,6 +29,57 @@ namespace YP.CodeGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
+            this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing YooPen.Core.Data;\r\n\r\nname" +
+                    "space ");
+            
+            #line 11 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
+            
+            #line default
+            #line hidden
+            this.Write(".Entity.Model\r\n{\r\n\tpublic class ");
+            
+            #line 13 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity : IBaseEntity\r\n\t{\r\n");
+            
+            #line 15 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
+ foreach(var model in _models){
+            
+            #line default
+            #line hidden
+            this.Write("\t\t/// <summary>\r\n\t\t/// ");
+            
+            #line 17 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.Description));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t/// </summary>\r\n\t\tpublic virtual ");
+            
+            #line 19 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.Type));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 19 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName));
+            
+            #line default
+            #line hidden
+            this.Write(" { get; set; }\r\n");
+            
+            #line 20 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
+ }
+            
+            #line default
+            #line hidden
+            this.Write("\t}\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

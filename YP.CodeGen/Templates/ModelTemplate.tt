@@ -3,3 +3,20 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="YP.CodeGen.TemplateModel" #>
+using System;
+using System.Collections.Generic;
+using YooPen.Core.Data;
+
+namespace <#=_projectName#>.Entity.Model
+{
+	public class <#=_entityName#>Entity : IBaseEntity
+	{
+<# foreach(var model in _models){#>
+		/// <summary>
+		/// <#=model.Description#>
+		/// </summary>
+		public virtual <#=model.Type#> <#=model.FieldName#> { get; set; }
+<# }#>
+	}
+}

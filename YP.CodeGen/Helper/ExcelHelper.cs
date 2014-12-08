@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using YP.CodeGen.ExcelModel;
@@ -64,7 +65,17 @@ namespace YP.CodeGen.Helper
                             mapping.Add(new MappingModel { FieldName = GetValue(cell, stringTablePart) });
                             break;
                         case "C":
-                            mapping[index].ColumnType = GetValue(cell, stringTablePart);
+                            var colType = GetValue(cell, stringTablePart);
+                            if (string.IsNullOrEmpty(colType))
+                            {
+                                mapping[index].ColumnType = "";
+                                mapping[index].TypeLength = "";
+                                break;
+                            }
+                            var typeValue = Regex.Match(colType, "[a-zA-Z]+").Captures[0];
+                            var length = Regex.Match(colType, @"\((\d+)\)").Groups[1];
+                            mapping[index].ColumnType = typeValue.Value;
+                            mapping[index].TypeLength = length.Value;
                             break;
                         case "D":
                             mapping[index].Key = GetEnumKey(GetValue(cell, stringTablePart));
@@ -80,7 +91,7 @@ namespace YP.CodeGen.Helper
                             entity[index].Type = type;
                             if (type.StartsWith("Enum"))
                             {
-                                var description = GetValue(row.Descendants<Cell>().Where(c => c.CellReference.Value.StartsWith("K")).First(), stringTablePart);
+                                var description = GetValue(row.Descendants<Cell>().First(c => c.CellReference.Value.StartsWith("K")), stringTablePart);
                                 if (!string.IsNullOrEmpty(description))
                                 {
                                     enums.Add(new EnumModel
@@ -105,6 +116,7 @@ namespace YP.CodeGen.Helper
                                 search.Add(new SearchModel
                                 {
                                     SearchName = entity[index].FieldName,
+                                    SearchType = entity[index].Type,
                                     Type = GetEnumSearchType(value)
                                 });
                             }

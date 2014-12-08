@@ -5,13 +5,17 @@
 <#@ import namespace="System.Collections.Generic" #>
 <# foreach (var model in _models) { #>
 
-public enum <#=model.EnumName #>
+namespace <#=_projectName#>.Entity.Model
 {
+
+	public enum <#=model.EnumName #>
+	{
 <# foreach (var value in model.Values) { #>
-	/// <summary>
-    /// <#=value.Description #>
-    /// </summary>
-	<#=value.Attribute #>,
+		/// <summary>
+		/// <#=value.Description #>
+		/// </summary>
+		<#=value.Attribute #>,
 <# } #>
+	}
 }
 <# } #>

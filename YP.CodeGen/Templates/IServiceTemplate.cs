@@ -18,9 +18,9 @@ namespace YP.CodeGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\Yoopoon_Framework\YP.CodeGen\Templates\EnumTemplate.tt"
+    #line 1 "E:\Yoopoon_Framework\YP.CodeGen\Templates\IServiceTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
-    public partial class EnumTemplate : EnumTemplateBase
+    public partial class IServiceTemplate : IServiceTemplateBase
     {
 #line hidden
         /// <summary>
@@ -28,61 +28,6 @@ namespace YP.CodeGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            
-            #line 6 "E:\Yoopoon_Framework\YP.CodeGen\Templates\EnumTemplate.tt"
- foreach (var model in _models) { 
-            
-            #line default
-            #line hidden
-            this.Write("\r\nnamespace ");
-            
-            #line 8 "E:\Yoopoon_Framework\YP.CodeGen\Templates\EnumTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
-            
-            #line default
-            #line hidden
-            this.Write(".Entity.Model\r\n{\r\n\r\n\tpublic enum ");
-            
-            #line 11 "E:\Yoopoon_Framework\YP.CodeGen\Templates\EnumTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.EnumName));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t{\r\n");
-            
-            #line 13 "E:\Yoopoon_Framework\YP.CodeGen\Templates\EnumTemplate.tt"
- foreach (var value in model.Values) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t/// <summary>\r\n\t\t/// ");
-            
-            #line 15 "E:\Yoopoon_Framework\YP.CodeGen\Templates\EnumTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(value.Description));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t/// </summary>\r\n\t\t");
-            
-            #line 17 "E:\Yoopoon_Framework\YP.CodeGen\Templates\EnumTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(value.Attribute));
-            
-            #line default
-            #line hidden
-            this.Write(",\r\n");
-            
-            #line 18 "E:\Yoopoon_Framework\YP.CodeGen\Templates\EnumTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t}\r\n}\r\n");
-            
-            #line 21 "E:\Yoopoon_Framework\YP.CodeGen\Templates\EnumTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -94,7 +39,7 @@ namespace YP.CodeGen.Templates
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
-    public class EnumTemplateBase
+    public class IServiceTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

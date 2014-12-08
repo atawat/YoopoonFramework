@@ -1,10 +1,5 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Remoting.Messaging;
-using Microsoft.VisualStudio.TextTemplating;
-using YP.CodeGen.Host;
 using YP.CodeGen.TemplateModel;
 using YP.CodeGen.Templates;
 
@@ -15,9 +10,11 @@ namespace YP.CodeGen.Helper
         private readonly string _outputPath;
         private readonly string _templatePath;
         private readonly string _tableName;
+        private readonly string _projectName;
 
         public FileFactory(string projectName, string tableName)
         {
+            _projectName = projectName;
             _tableName = tableName;
             _templatePath = Path.GetFullPath("./Templates/");
             _outputPath = Path.GetFullPath("./Output/" + projectName + "/");
@@ -25,63 +22,49 @@ namespace YP.CodeGen.Helper
 
         public void RenderEntityFile(List<EntityModel> models)
         {
-            if (!Directory.Exists(_outputPath + "Entity\\"))
+            if (!Directory.Exists(_outputPath + "Entity\\"+ _tableName +"\\"))
             {
-                Directory.CreateDirectory(_outputPath + "Entity\\");
+                Directory.CreateDirectory(_outputPath + "Entity\\" + _tableName + "\\");
             }
-            var entityOutputPath = _outputPath + "Entity\\" + _tableName + "Entity.cs";
-            var templateFileName = _templatePath + "Model.tt";
-            var host = new CustomCmdLineHost();
-            var engine = new Engine();
-            CallContext.LogicalSetData("Model", models);
-            host.TemplateFileValue = templateFileName;
-            //Read the text template.
-            string input = File.ReadAllText(templateFileName);
-            //Transform the text template.
-            string output = engine.ProcessTemplate(input, host);
-
-            File.WriteAllText(entityOutputPath, output, host.FileEncoding);
-            CallContext.FreeNamedDataSlot("Model");
-            foreach (CompilerError error in host.Errors)
-            {
-                Console.WriteLine(error.ToString());
-            }
+            var entityOutputPath = _outputPath + "Entity\\" + _tableName + "\\" + _tableName + "Entity.cs";
+            var modelTemplate = new ModelTemplate(models, _tableName,_projectName);
+            var output = modelTemplate.TransformText();
+            File.WriteAllText(entityOutputPath, output);
         }
 
-        public void RenderMappingFile(List<MappingModel> models)
+        public void RenderMappingFile(List<MappingModel> models,List<EntityModel> eModels)
         {
-            if (!Directory.Exists(_outputPath + "Mappings\\"))
+            if (!Directory.Exists(_outputPath + "Mappings\\" + _tableName + "\\"))
             {
-                Directory.CreateDirectory(_outputPath + "Mappings\\");
+                Directory.CreateDirectory(_outputPath + "Mappings\\" + _tableName + "\\");
             }
-            var entityOutputPath = _outputPath + "Mappings\\" + _tableName + "Mapping.cs";
-            var templateFileName = _templatePath + "Mapping.tt";
-            var host = new CustomCmdLineHost();
-            var engine = new Engine();
-            CallContext.LogicalSetData("Model", models);
-            host.TemplateFileValue = templateFileName;
-            //Read the text template.
-            string input = File.ReadAllText(templateFileName);
-            //Transform the text template.
-            string output = engine.ProcessTemplate(input, host);
-
-            File.WriteAllText(entityOutputPath, output, host.FileEncoding);
-            CallContext.FreeNamedDataSlot("Model");
-            foreach (CompilerError error in host.Errors)
-            {
-                Console.WriteLine(error.ToString());
-            }
+            var outputPath = _outputPath + "Mappings\\" + _tableName + "\\" + _tableName + "Mapping.cs";
+            var mappingTemplate = new MappingTemplate(models,eModels,_projectName,_tableName);
+            var output = mappingTemplate.TransformText();
+            File.WriteAllText(outputPath, output);
         }
 
         public void RenderEnumFile(List<EnumModel> models)
         {
-            if (!Directory.Exists(_outputPath + "Entity\\"))
+            if (!Directory.Exists(_outputPath + "Entity\\" + _tableName + "\\"))
             {
-                Directory.CreateDirectory(_outputPath + "Entity\\");
+                Directory.CreateDirectory(_outputPath + "Entity\\" + _tableName + "\\");
             }
-            var enumTemplate = new EnumTemplate(models);
+            var enumTemplate = new EnumTemplate(models,_projectName);
             var output = enumTemplate.TransformText();
-            var outputPath = _outputPath + "Entity\\" +"Enum" + _tableName + ".cs";
+            var outputPath = _outputPath + "Entity\\" + _tableName + "\\" + "Enum" + _tableName + ".cs";
+            File.WriteAllText(outputPath, output);
+        }
+
+        public void RenderSearchFile(List<SearchModel> models)
+        {
+            if (!Directory.Exists(_outputPath + "Entity\\" + _tableName + "\\"))
+            {
+                Directory.CreateDirectory(_outputPath + "Entity\\" + _tableName + "\\");
+            }
+            var searchTemplate = new ConditionTemplate(models,_tableName,_projectName);
+            var output = searchTemplate.TransformText();
+            var outputPath = _outputPath + "Entity\\" + _tableName + "\\" + _tableName + "SearchConditon.cs";
             File.WriteAllText(outputPath, output);
         }
     }

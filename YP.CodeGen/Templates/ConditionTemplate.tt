@@ -1,0 +1,56 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="YP.CodeGen.TemplateModel" #>
+<# var orderName =new List<string>(); #>
+namespace <#=_projectName#>.Entity.Model
+{
+	public class <#=_entityName#>SearchCondition
+	{
+		/// <summary>
+		/// 页码
+		/// </summary>
+		public int? Page { get; set; }
+
+		/// <summary>
+		/// 每页大小
+		/// </summary>
+		public int? PageCount { get; set; }
+
+		/// <summary>
+		/// 是否降序
+		/// </summary>
+		public bool isDescending { get; set; }
+
+<# foreach(var model in _models){
+	if(model.Type == EnumSearchType.In){ #>
+		public <#=model.SearchType #>[] <#=model.SearchName#>s { get; set; }
+<#} else if (model.Type == EnumSearchType.Like) {#>
+		public <#=model.SearchType #> <#=model.SearchName#> { get; set; }
+<#} else if (model.Type == EnumSearchType.Equal) {#>
+		public <#=model.SearchType #> <#=model.SearchName#> { get; set; }
+<#}else if (model.Type == EnumSearchType.Range) {#>
+		public <#=model.SearchType #> <#=model.SearchName#>Begin { get; set; }
+
+		public <#=model.SearchType #> <#=model.SearchName#>End { get; set; }
+<#} else {
+	  orderName.Add(model.SearchName);
+}#>
+
+<#}#>
+<# if(orderName.Count() >0){ #>
+		public Enum<#=_entityName#>SearchOrderBy OrderBy { get; set; }
+<#}#>
+	}
+
+<# if(orderName.Count() >0){ #>
+	public enum Enum<#=_entityName#>SearchOrderBy
+	{
+<# foreach(var name in orderName) {#>
+		OrderBy<#=name#>,
+<#}#>
+	}
+<#}#>
+}

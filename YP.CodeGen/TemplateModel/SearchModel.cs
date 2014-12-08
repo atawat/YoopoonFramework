@@ -4,6 +4,8 @@
     {
         public string SearchName { get; set; }
 
+        public string SearchType { get; set; }
+
         public EnumSearchType Type { get; set; }
     }
 

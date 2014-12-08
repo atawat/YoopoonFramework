@@ -36,6 +36,7 @@ namespace YP.CodeGen
                 foreach (var file in excelFile)
                 {
                     Console.WriteLine(i + "…………" + file.Name);
+                    i++;
                 }
             }
             Console.Write("请输入需要生成代码的文件序号：");
@@ -63,9 +64,10 @@ namespace YP.CodeGen
                 foreach (var sheet in model.Sheets)
                 {
                     var fac = new FileFactory(model.ProjectName, sheet.TabbleEnName);
-                    //fac.RenderEntityFile(sheet.Entity);
-                    //fac.RenderMappingFile(sheet.Mapping);
+                    fac.RenderEntityFile(sheet.Entity);
+                    fac.RenderMappingFile(sheet.Mapping,sheet.Entity);
                     fac.RenderEnumFile(sheet.Enums);
+                    fac.RenderSearchFile(sheet.Search);
                 }
                 return true;
             }

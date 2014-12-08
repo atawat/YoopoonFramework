@@ -3,3 +3,25 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+using YooPen.Core.Data;
+using System.Data.Entity.ModelConfiguration;
+using <#=_projectName#>.Entity.Model;
+
+public class <#=_entityName#>Mapping : EntityTypeConfiguration<<#=_entityName#>Entity>, IMapping
+{
+	public <#=_entityName#>Mapping()
+	{
+		ToTable("<#=_entityName#>");
+		HasKey(c => c.Id);
+<# foreach(var model in _eModels){
+   var mappingModel = _mModels.FirstOrDefault(c =>c.FieldName == model.FieldName);
+	   if(mappingModel != null){ #>
+		Property(c => c.<#=model.FieldName#>).HasColumnType("<#=mappingModel.ColumnType#>")<#=string.IsNullOrEmpty(mappingModel.TypeLength)?"":".HasMaxLength(" + mappingModel.TypeLength +")"#><#=mappingModel.IsNull?".IsOptional()":""#>;
+<# }else if(model.FieldName.StartsWith("IList")){ #>
+		HasMany(c => c.<#=model.FieldName#>));
+<#}else{#>
+		HasOptional(c =>c.<#=model.FieldName#>);
+<#}
+   } #>
+	}
+}

@@ -9,10 +9,12 @@ namespace YP.CodeGen.Templates
 {
     public partial class EnumTemplate
     {
-        private List<EnumModel> _models;
-        public EnumTemplate(List<EnumModel> models)
+        private readonly List<EnumModel> _models;
+        private readonly string _projectName;
+        public EnumTemplate(List<EnumModel> models, string projectName)
         {
             _models = models;
+            _projectName = projectName;
         }
     }
 }

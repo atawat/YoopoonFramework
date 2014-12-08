@@ -103,12 +103,24 @@
     <Compile Include="TemplateModel\EnumModel.cs" />
     <Compile Include="TemplateModel\MappingModel.cs" />
     <Compile Include="TemplateModel\SearchModel.cs" />
+    <Compile Include="Templates\ConditionTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConditionTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\ConditionTemplatePartial.cs" />
     <Compile Include="Templates\EnumTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EnumTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Templates\EnumTemplatePartial.cs" />
+    <Compile Include="Templates\IServiceTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IServiceTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\MappingTemplatePartial.cs" />
     <Compile Include="Templates\MappingTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -119,6 +131,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="Templates\ModelTemplatePartial.cs" />
+    <Compile Include="Templates\ServiceTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceTemplate.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -126,9 +144,17 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Templates\ConditionTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ConditionTemplate.cs</LastGenOutput>
+    </None>
     <None Include="Templates\EnumTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>EnumTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\IServiceTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>IServiceTemplate.cs</LastGenOutput>
     </None>
     <None Include="Templates\MappingTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -137,6 +163,10 @@
     <None Include="Templates\ModelTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ModelTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\ServiceTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ServiceTemplate.cs</LastGenOutput>
     </None>
     <None Include="YP.CodeGen_TemporaryKey.pfx" />
   </ItemGroup>

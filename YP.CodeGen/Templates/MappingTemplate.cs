@@ -18,7 +18,7 @@ namespace YP.CodeGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "F:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+    #line 1 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class MappingTemplate : MappingTemplateBase
     {
@@ -28,6 +28,114 @@ namespace YP.CodeGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
+            this.Write("using YooPen.Core.Data;\r\nusing System.Data.Entity.ModelConfiguration;\r\nusing ");
+            
+            #line 8 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
+            
+            #line default
+            #line hidden
+            this.Write(".Entity.Model;\r\n\r\npublic class ");
+            
+            #line 10 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Mapping : EntityTypeConfiguration<");
+            
+            #line 10 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity>, IMapping\r\n{\r\n\tpublic ");
+            
+            #line 12 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Mapping()\r\n\t{\r\n\t\tToTable(\"");
+            
+            #line 14 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("\");\r\n\t\tHasKey(c => c.Id);\r\n");
+            
+            #line 16 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+ foreach(var model in _eModels){
+   var mappingModel = _mModels.FirstOrDefault(c =>c.FieldName == model.FieldName);
+	   if(mappingModel != null){ 
+            
+            #line default
+            #line hidden
+            this.Write("\t\tProperty(c => c.");
+            
+            #line 19 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName));
+            
+            #line default
+            #line hidden
+            this.Write(").HasColumnType(\"");
+            
+            #line 19 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mappingModel.ColumnType));
+            
+            #line default
+            #line hidden
+            this.Write("\")");
+            
+            #line 19 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.IsNullOrEmpty(mappingModel.TypeLength)?"":".HasMaxLength(" + mappingModel.TypeLength +")"));
+            
+            #line default
+            #line hidden
+            
+            #line 19 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mappingModel.IsNull?".IsOptional()":""));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 20 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+ }else if(model.FieldName.StartsWith("IList")){ 
+            
+            #line default
+            #line hidden
+            this.Write("\t\tHasMany(c => c.");
+            
+            #line 21 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName));
+            
+            #line default
+            #line hidden
+            this.Write("));\r\n");
+            
+            #line 22 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+}else{
+            
+            #line default
+            #line hidden
+            this.Write("\t\tHasOptional(c =>c.");
+            
+            #line 23 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 24 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
+}
+   } 
+            
+            #line default
+            #line hidden
+            this.Write("\t}\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
