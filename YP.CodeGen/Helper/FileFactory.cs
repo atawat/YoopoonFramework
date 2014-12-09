@@ -67,5 +67,22 @@ namespace YP.CodeGen.Helper
             var outputPath = _outputPath + "Entity\\" + _tableName + "\\" + _tableName + "SearchConditon.cs";
             File.WriteAllText(outputPath, output);
         }
+
+        public void RenderServiceFile(List<SearchModel> models)
+        {
+            if (!Directory.Exists(_outputPath + "Services\\" + _tableName + "\\"))
+            {
+                Directory.CreateDirectory(_outputPath + "Services\\" + _tableName + "\\");
+            }
+            var serviceTemplate = new ServiceTemplate(_projectName,_tableName,models);
+            var output = serviceTemplate.TransformText();
+            var outputPath = _outputPath + "Services\\" + _tableName + "\\" + _tableName + "Service.cs";
+            File.WriteAllText(outputPath, output);
+
+            var interfaceTemplate = new IServiceTemplate(_projectName, _tableName);
+            var iOutPut = interfaceTemplate.TransformText();
+            var iOutPutPath = _outputPath + "Services\\" + _tableName + "\\I" + _tableName + "Service.cs";
+            File.WriteAllText(iOutPutPath, iOutPut);
+        }
     }
 }

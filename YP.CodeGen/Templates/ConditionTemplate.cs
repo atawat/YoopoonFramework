@@ -102,7 +102,7 @@ namespace YP.CodeGen.Templates
             
             #line default
             #line hidden
-            this.Write(" ");
+            this.Write("? ");
             
             #line 31 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
@@ -123,7 +123,7 @@ namespace YP.CodeGen.Templates
             
             #line default
             #line hidden
-            this.Write(" ");
+            this.Write("? ");
             
             #line 33 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
@@ -144,7 +144,7 @@ namespace YP.CodeGen.Templates
             
             #line default
             #line hidden
-            this.Write(" ");
+            this.Write("? ");
             
             #line 35 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
@@ -158,7 +158,7 @@ namespace YP.CodeGen.Templates
             
             #line default
             #line hidden
-            this.Write(" ");
+            this.Write("? ");
             
             #line 37 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
@@ -194,7 +194,7 @@ namespace YP.CodeGen.Templates
             
             #line default
             #line hidden
-            this.Write("SearchOrderBy OrderBy { get; set; }\r\n");
+            this.Write("SearchOrderBy? OrderBy { get; set; }\r\n");
             
             #line 45 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
 }

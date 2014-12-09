@@ -3,3 +3,181 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="YP.CodeGen.TemplateModel" #>
+<# var orderNames = new List<string>(); #>
+using System;
+using System.Linq;
+using YooPen.Core.Data;
+using YooPen.Core.Logging;
+using <#=_projectName#>.Entity.Model;
+
+namespace <#=_projectName#>.Service.<#=_entityName#>
+{
+	public class <#=_entityName#>Service : I<#=_entityName#>Service
+	{
+		private readonly IRepository<<#=_entityName#>Entity> _<#=_entityName.ToLower()#>Repository;
+		private readonly ILog _log;
+
+		public <#=_entityName#>Service(IRepository<<#=_entityName#>Entity> <#=_entityName.ToLower()#>Repository,ILog log)
+		{
+			_<#=_entityName.ToLower()#>Repository = <#=_entityName.ToLower()#>Repository;
+			_log = log;
+		}
+		
+		public <#=_entityName#>Entity Create (<#=_entityName#>Entity entity)
+		{
+			try
+            {
+                _<#=_entityName.ToLower()#>Repository.Insert(entity);
+                return entity;
+            }
+            catch (Exception e)
+            {
+				_log.Error(e,"数据库操作出错");
+                return null;
+            }
+		}
+
+		public bool Delete(<#=_entityName#>Entity entity)
+		{
+			try
+            {
+                _<#=_entityName.ToLower()#>Repository.Delete(entity);
+                return true;
+            }
+            catch (Exception e)
+            {
+				_log.Error(e,"数据库操作出错");
+                return false;
+            }
+		}
+
+		public <#=_entityName#>Entity Update (<#=_entityName#>Entity entity)
+		{
+			try
+            {
+                _<#=_entityName.ToLower()#>Repository.Update(entity);
+                return entity;
+            }
+            catch (Exception e)
+            {
+				_log.Error(e,"数据库操作出错");
+                return null;
+            }
+		}
+
+		public <#=_entityName#>Entity Get<#=_entityName#>ById (int id)
+		{
+			try
+            {
+                return _<#=_entityName.ToLower()#>Repository.GetById(id); ;
+            }
+            catch (Exception e)
+            {
+				_log.Error(e,"数据库操作出错");
+                return null;
+            }
+		}
+
+		public IQueryable<<#=_entityName#>Entity> Get<#=_entityName#>sByCondition(<#=_entityName#>SeachCondition condition)
+		{
+			var query = _<#=_entityName.ToLower()#>Repository.Table;
+			try
+			{
+<# foreach(var model in _sModels.OrderByDescending(c => c.Type)){ 
+				if(model.Type == EnumSearchType.Range){#>
+				if (condition.<#=model.SearchName#>Begin.HasValue)
+                {
+                    query = query.Where(q => q.<#=model.SearchName#>>= condition.<#=model.SearchName#>Begin.Value);
+                }
+                if (condition.<#=model.SearchName#>End.HasValue)
+                {
+                    query = query.Where(q => q.<#=model.SearchName#> < condition.<#=model.SearchName#>End.Value);
+                }
+<# }			else if(model.Type == EnumSearchType.Equal){#>
+				if (condition.<#=model.SearchName#>.HasValue)
+                {
+                    query = query.Where(q => q.<#=model.SearchName#> == condition.<#=model.SearchName#>.Value);
+                }
+<# }			else if(model.Type == EnumSearchType.Like){#>
+				if (condition.<#=model.SearchName#>.HasValue)
+                {
+                    query = query.Where(q => q.<#=model.SearchName#>.Contains(condition.<#=model.SearchName#>.Value));
+                }
+<#}				else if(model.Type == EnumSearchType.In){#>
+				if (condition.<#=model.SearchName#>s != null && condition.<#=model.SearchName#>s.Any())
+                {
+                    query = query.Where(q => condition.<#=model.SearchName#>s.Contains(q.<#=model.SearchName#>));
+                }
+<#}				else if(model.Type == EnumSearchType.Order){
+ orderNames.Add(model.SearchName);}
+				if(orderNames.Count() > 0){#>
+				if(condition.OrderBy.HasValue)
+				{
+					switch (condition.OrderBy.Value)
+                    {
+<#						foreach(var name in orderNames){ #>
+						case Enum<#=_entityName#>SearchOrderBy.OrderBy<#=name#>:
+							query = conditon.isDescending?query.OrderByDescending(q=>q.<#=name#>):query.OrderBy(q=>q.<#=name#>);
+							break;
+<# }#>
+                    }
+					
+				}
+<# }#>
+<#}#>
+				if (condition.Page.HasValue && condition.PageCount.HasValue)
+                {
+                    query = query.Skip((condition.Page.Value - 1)*condition.PageCount.Value).Take(condition.PageCount.Value);
+                }
+				return query;
+			}
+			catch(Exception e)
+			{
+				_log.Error(e,"数据库操作出错");
+                return null;
+			}
+		}
+
+		public int Get<#=_entityName#>Count (<#=_entityName#>SeachCondition condition)
+		{
+			var query = _<#=_entityName.ToLower()#>Repository.Table;
+			try
+			{
+<# foreach(var model in _sModels.OrderByDescending(c => c.Type)){ 
+				if(model.Type == EnumSearchType.Range){#>
+				if (condition.<#=model.SearchName#>Begin.HasValue)
+                {
+                    query = query.Where(q => q.<#=model.SearchName#>>= condition.<#=model.SearchName#>Begin.Value);
+                }
+                if (condition.<#=model.SearchName#>End.HasValue)
+                {
+                    query = query.Where(q => q.<#=model.SearchName#> < condition.<#=model.SearchName#>End.Value);
+                }
+<# }			else if(model.Type == EnumSearchType.Equal){#>
+				if (condition.<#=model.SearchName#>.HasValue)
+                {
+                    query = query.Where(q => q.<#=model.SearchName#> == condition.<#=model.SearchName#>.Value);
+                }
+<# }			else if(model.Type == EnumSearchType.Like){#>
+				if (condition.<#=model.SearchName#>.HasValue)
+                {
+                    query = query.Where(q => q.<#=model.SearchName#>.Contains(condition.<#=model.SearchName#>.Value));
+                }
+<#}				else if(model.Type == EnumSearchType.In){#>
+				if (condition.<#=model.SearchName#>s != null && condition.<#=model.SearchName#>s.Any())
+                {
+                    query = query.Where(q => condition.<#=model.SearchName#>s.Contains(q.<#=model.SearchName#>));
+                }
+<# }#>
+<#}#>
+				return query.Count();
+			}
+			catch(Exception e)
+			{
+				_log.Error(e,"数据库操作出错");
+                return -1;
+			}
+		}
+	}
+}

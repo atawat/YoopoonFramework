@@ -28,20 +28,20 @@ namespace <#=_projectName#>.Entity.Model
 	if(model.Type == EnumSearchType.In){ #>
 		public <#=model.SearchType #>[] <#=model.SearchName#>s { get; set; }
 <#} else if (model.Type == EnumSearchType.Like) {#>
-		public <#=model.SearchType #> <#=model.SearchName#> { get; set; }
+		public <#=model.SearchType #>? <#=model.SearchName#> { get; set; }
 <#} else if (model.Type == EnumSearchType.Equal) {#>
-		public <#=model.SearchType #> <#=model.SearchName#> { get; set; }
+		public <#=model.SearchType #>? <#=model.SearchName#> { get; set; }
 <#}else if (model.Type == EnumSearchType.Range) {#>
-		public <#=model.SearchType #> <#=model.SearchName#>Begin { get; set; }
+		public <#=model.SearchType #>? <#=model.SearchName#>Begin { get; set; }
 
-		public <#=model.SearchType #> <#=model.SearchName#>End { get; set; }
+		public <#=model.SearchType #>? <#=model.SearchName#>End { get; set; }
 <#} else {
 	  orderName.Add(model.SearchName);
 }#>
 
 <#}#>
 <# if(orderName.Count() >0){ #>
-		public Enum<#=_entityName#>SearchOrderBy OrderBy { get; set; }
+		public Enum<#=_entityName#>SearchOrderBy? OrderBy { get; set; }
 <#}#>
 	}
 

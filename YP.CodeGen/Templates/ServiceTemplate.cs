@@ -12,6 +12,7 @@ namespace YP.CodeGen.Templates
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
+    using YP.CodeGen.TemplateModel;
     using System;
     
     /// <summary>
@@ -28,6 +29,612 @@ namespace YP.CodeGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
+            
+            #line 7 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+ var orderNames = new List<string>(); 
+            
+            #line default
+            #line hidden
+            this.Write("using System;\r\nusing System.Linq;\r\nusing YooPen.Core.Data;\r\nusing YooPen.Core.Log" +
+                    "ging;\r\nusing ");
+            
+            #line 12 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
+            
+            #line default
+            #line hidden
+            this.Write(".Entity.Model;\r\n\r\nnamespace ");
+            
+            #line 14 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
+            
+            #line default
+            #line hidden
+            this.Write(".Service.");
+            
+            #line 14 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n{\r\n\tpublic class ");
+            
+            #line 16 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Service : I");
+            
+            #line 16 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Service\r\n\t{\r\n\t\tprivate readonly IRepository<");
+            
+            #line 18 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity> _");
+            
+            #line 18 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write("Repository;\r\n\t\tprivate readonly ILog _log;\r\n\r\n\t\tpublic ");
+            
+            #line 21 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Service(IRepository<");
+            
+            #line 21 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity> ");
+            
+            #line 21 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write("Repository,ILog log)\r\n\t\t{\r\n\t\t\t_");
+            
+            #line 23 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write("Repository = ");
+            
+            #line 23 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write("Repository;\r\n\t\t\t_log = log;\r\n\t\t}\r\n\t\t\r\n\t\tpublic ");
+            
+            #line 27 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity Create (");
+            
+            #line 27 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity entity)\r\n\t\t{\r\n\t\t\ttry\r\n            {\r\n                _");
+            
+            #line 31 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write("Repository.Insert(entity);\r\n                return entity;\r\n            }\r\n      " +
+                    "      catch (Exception e)\r\n            {\r\n\t\t\t\t_log.Error(e,\"数据库操作出错\");\r\n        " +
+                    "        return null;\r\n            }\r\n\t\t}\r\n\r\n\t\tpublic bool Delete(");
+            
+            #line 41 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity entity)\r\n\t\t{\r\n\t\t\ttry\r\n            {\r\n                _");
+            
+            #line 45 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write("Repository.Delete(entity);\r\n                return true;\r\n            }\r\n        " +
+                    "    catch (Exception e)\r\n            {\r\n\t\t\t\t_log.Error(e,\"数据库操作出错\");\r\n          " +
+                    "      return false;\r\n            }\r\n\t\t}\r\n\r\n\t\tpublic ");
+            
+            #line 55 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity Update (");
+            
+            #line 55 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity entity)\r\n\t\t{\r\n\t\t\ttry\r\n            {\r\n                _");
+            
+            #line 59 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write("Repository.Update(entity);\r\n                return entity;\r\n            }\r\n      " +
+                    "      catch (Exception e)\r\n            {\r\n\t\t\t\t_log.Error(e,\"数据库操作出错\");\r\n        " +
+                    "        return null;\r\n            }\r\n\t\t}\r\n\r\n\t\tpublic ");
+            
+            #line 69 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity Get");
+            
+            #line 69 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("ById (int id)\r\n\t\t{\r\n\t\t\ttry\r\n            {\r\n                return _");
+            
+            #line 73 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write("Repository.GetById(id); ;\r\n            }\r\n            catch (Exception e)\r\n      " +
+                    "      {\r\n\t\t\t\t_log.Error(e,\"数据库操作出错\");\r\n                return null;\r\n           " +
+                    " }\r\n\t\t}\r\n\r\n\t\tpublic IQueryable<");
+            
+            #line 82 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Entity> Get");
+            
+            #line 82 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("sByCondition(");
+            
+            #line 82 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("SeachCondition condition)\r\n\t\t{\r\n\t\t\tvar query = _");
+            
+            #line 84 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write("Repository.Table;\r\n\t\t\ttry\r\n\t\t\t{\r\n");
+            
+            #line 87 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+ foreach(var model in _sModels.OrderByDescending(c => c.Type)){ 
+				if(model.Type == EnumSearchType.Range){
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\tif (condition.");
+            
+            #line 89 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("Begin.HasValue)\r\n                {\r\n                    query = query.Where(q => " +
+                    "q.");
+            
+            #line 91 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(">= condition.");
+            
+            #line 91 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("Begin.Value);\r\n                }\r\n                if (condition.");
+            
+            #line 93 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("End.HasValue)\r\n                {\r\n                    query = query.Where(q => q." +
+                    "");
+            
+            #line 95 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(" < condition.");
+            
+            #line 95 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("End.Value);\r\n                }\r\n");
+            
+            #line 97 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+ }			else if(model.Type == EnumSearchType.Equal){
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\tif (condition.");
+            
+            #line 98 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(".HasValue)\r\n                {\r\n                    query = query.Where(q => q.");
+            
+            #line 100 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(" == condition.");
+            
+            #line 100 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(".Value);\r\n                }\r\n");
+            
+            #line 102 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+ }			else if(model.Type == EnumSearchType.Like){
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\tif (condition.");
+            
+            #line 103 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(".HasValue)\r\n                {\r\n                    query = query.Where(q => q.");
+            
+            #line 105 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(".Contains(condition.");
+            
+            #line 105 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(".Value));\r\n                }\r\n");
+            
+            #line 107 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+}				else if(model.Type == EnumSearchType.In){
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\tif (condition.");
+            
+            #line 108 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("s != null && condition.");
+            
+            #line 108 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("s.Any())\r\n                {\r\n                    query = query.Where(q => conditi" +
+                    "on.");
+            
+            #line 110 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("s.Contains(q.");
+            
+            #line 110 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("));\r\n                }\r\n");
+            
+            #line 112 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+}				else if(model.Type == EnumSearchType.Order){
+ orderNames.Add(model.SearchName);}
+				if(orderNames.Count() > 0){
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\tif(condition.OrderBy.HasValue)\r\n\t\t\t\t{\r\n\t\t\t\t\tswitch (condition.OrderBy.Value)\r" +
+                    "\n                    {\r\n");
+            
+            #line 119 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+						foreach(var name in orderNames){ 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\tcase Enum");
+            
+            #line 120 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("SearchOrderBy.OrderBy");
+            
+            #line 120 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(name));
+            
+            #line default
+            #line hidden
+            this.Write(":\r\n\t\t\t\t\t\t\tquery = conditon.isDescending?query.OrderByDescending(q=>q.");
+            
+            #line 121 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(name));
+            
+            #line default
+            #line hidden
+            this.Write("):query.OrderBy(q=>q.");
+            
+            #line 121 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(name));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n\t\t\t\t\t\t\tbreak;\r\n");
+            
+            #line 123 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+ }
+            
+            #line default
+            #line hidden
+            this.Write("                    }\r\n\t\t\t\t\t\r\n\t\t\t\t}\r\n");
+            
+            #line 127 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+ }
+            
+            #line default
+            #line hidden
+            
+            #line 128 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write(@"				if (condition.Page.HasValue && condition.PageCount.HasValue)
+                {
+                    query = query.Skip((condition.Page.Value - 1)*condition.PageCount.Value).Take(condition.PageCount.Value);
+                }
+				return query;
+			}
+			catch(Exception e)
+			{
+				_log.Error(e,""数据库操作出错"");
+                return null;
+			}
+		}
+
+		public int Get");
+            
+            #line 142 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("Count (");
+            
+            #line 142 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            
+            #line default
+            #line hidden
+            this.Write("SeachCondition condition)\r\n\t\t{\r\n\t\t\tvar query = _");
+            
+            #line 144 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write("Repository.Table;\r\n\t\t\ttry\r\n\t\t\t{\r\n");
+            
+            #line 147 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+ foreach(var model in _sModels.OrderByDescending(c => c.Type)){ 
+				if(model.Type == EnumSearchType.Range){
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\tif (condition.");
+            
+            #line 149 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("Begin.HasValue)\r\n                {\r\n                    query = query.Where(q => " +
+                    "q.");
+            
+            #line 151 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(">= condition.");
+            
+            #line 151 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("Begin.Value);\r\n                }\r\n                if (condition.");
+            
+            #line 153 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("End.HasValue)\r\n                {\r\n                    query = query.Where(q => q." +
+                    "");
+            
+            #line 155 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(" < condition.");
+            
+            #line 155 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("End.Value);\r\n                }\r\n");
+            
+            #line 157 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+ }			else if(model.Type == EnumSearchType.Equal){
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\tif (condition.");
+            
+            #line 158 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(".HasValue)\r\n                {\r\n                    query = query.Where(q => q.");
+            
+            #line 160 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(" == condition.");
+            
+            #line 160 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(".Value);\r\n                }\r\n");
+            
+            #line 162 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+ }			else if(model.Type == EnumSearchType.Like){
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\tif (condition.");
+            
+            #line 163 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(".HasValue)\r\n                {\r\n                    query = query.Where(q => q.");
+            
+            #line 165 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(".Contains(condition.");
+            
+            #line 165 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write(".Value));\r\n                }\r\n");
+            
+            #line 167 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+}				else if(model.Type == EnumSearchType.In){
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\tif (condition.");
+            
+            #line 168 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("s != null && condition.");
+            
+            #line 168 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("s.Any())\r\n                {\r\n                    query = query.Where(q => conditi" +
+                    "on.");
+            
+            #line 170 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("s.Contains(q.");
+            
+            #line 170 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
+            
+            #line default
+            #line hidden
+            this.Write("));\r\n                }\r\n");
+            
+            #line 172 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+ }
+            
+            #line default
+            #line hidden
+            
+            #line 173 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ServiceTemplate.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\treturn query.Count();\r\n\t\t\t}\r\n\t\t\tcatch(Exception e)\r\n\t\t\t{\r\n\t\t\t\t_log.Error(e,\"数" +
+                    "据库操作出错\");\r\n                return -1;\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
