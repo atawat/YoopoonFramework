@@ -7,8 +7,8 @@
 <# var orderNames = new List<string>(); #>
 using System;
 using System.Linq;
-using YooPen.Core.Data;
-using YooPen.Core.Logging;
+using YooPoon.Core.Data;
+using YooPoon.Core.Logging;
 using <#=_projectName#>.Entity.Model;
 
 namespace <#=_projectName#>.Service.<#=_entityName#>
@@ -79,7 +79,7 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
             }
 		}
 
-		public IQueryable<<#=_entityName#>Entity> Get<#=_entityName#>sByCondition(<#=_entityName#>SeachCondition condition)
+		public IQueryable<<#=_entityName#>Entity> Get<#=_entityName#>sByCondition(<#=_entityName#>SearchCondition condition)
 		{
 			var query = _<#=_entityName.ToLower()#>Repository.Table;
 			try
@@ -94,16 +94,30 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
                 {
                     query = query.Where(q => q.<#=model.SearchName#> < condition.<#=model.SearchName#>End.Value);
                 }
-<# }			else if(model.Type == EnumSearchType.Equal){#>
+<# }			else if(model.Type == EnumSearchType.Equal){
+				if(model.SearchType =="string"){#>
+				if (string.IsNullOrEmpty(condition.<#=model.SearchName#>))
+                {
+                    query = query.Where(q => q.<#=model.SearchName#> == condition.<#=model.SearchName#>);
+                }
+<#}else{#>
 				if (condition.<#=model.SearchName#>.HasValue)
                 {
                     query = query.Where(q => q.<#=model.SearchName#> == condition.<#=model.SearchName#>.Value);
                 }
-<# }			else if(model.Type == EnumSearchType.Like){#>
+<# }#>
+<# }			else if(model.Type == EnumSearchType.Like){
+				if(model.SearchType =="string"){#>
+				if (!string.IsNullOrEmpty(condition.<#=model.SearchName#>))
+                {
+                    query = query.Where(q => q.<#=model.SearchName#>.Contains(condition.<#=model.SearchName#>));
+                }
+<#}else{#>
 				if (condition.<#=model.SearchName#>.HasValue)
                 {
                     query = query.Where(q => q.<#=model.SearchName#>.Contains(condition.<#=model.SearchName#>.Value));
                 }
+<#}#>
 <#}				else if(model.Type == EnumSearchType.In){#>
 				if (condition.<#=model.SearchName#>s != null && condition.<#=model.SearchName#>s.Any())
                 {
@@ -118,7 +132,7 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
                     {
 <#						foreach(var name in orderNames){ #>
 						case Enum<#=_entityName#>SearchOrderBy.OrderBy<#=name#>:
-							query = conditon.isDescending?query.OrderByDescending(q=>q.<#=name#>):query.OrderBy(q=>q.<#=name#>);
+							query = condition.isDescending?query.OrderByDescending(q=>q.<#=name#>):query.OrderBy(q=>q.<#=name#>);
 							break;
 <# }#>
                     }
@@ -139,7 +153,7 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
 			}
 		}
 
-		public int Get<#=_entityName#>Count (<#=_entityName#>SeachCondition condition)
+		public int Get<#=_entityName#>Count (<#=_entityName#>SearchCondition condition)
 		{
 			var query = _<#=_entityName.ToLower()#>Repository.Table;
 			try
@@ -154,16 +168,30 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
                 {
                     query = query.Where(q => q.<#=model.SearchName#> < condition.<#=model.SearchName#>End.Value);
                 }
-<# }			else if(model.Type == EnumSearchType.Equal){#>
+<# }			else if(model.Type == EnumSearchType.Equal){
+				if(model.SearchType =="string"){#>
+				if (string.IsNullOrEmpty(condition.<#=model.SearchName#>))
+                {
+                    query = query.Where(q => q.<#=model.SearchName#> == condition.<#=model.SearchName#>);
+                }
+<#}else{#>
 				if (condition.<#=model.SearchName#>.HasValue)
                 {
                     query = query.Where(q => q.<#=model.SearchName#> == condition.<#=model.SearchName#>.Value);
                 }
-<# }			else if(model.Type == EnumSearchType.Like){#>
+<# }#>
+<# }			else if(model.Type == EnumSearchType.Like){
+				if(model.SearchType =="string"){#>
+				if (!string.IsNullOrEmpty(condition.<#=model.SearchName#>))
+                {
+                    query = query.Where(q => q.<#=model.SearchName#>.Contains(condition.<#=model.SearchName#>));
+                }
+<#}else{#>
 				if (condition.<#=model.SearchName#>.HasValue)
                 {
                     query = query.Where(q => q.<#=model.SearchName#>.Contains(condition.<#=model.SearchName#>.Value));
                 }
+<#}#>
 <#}				else if(model.Type == EnumSearchType.In){#>
 				if (condition.<#=model.SearchName#>s != null && condition.<#=model.SearchName#>s.Any())
                 {

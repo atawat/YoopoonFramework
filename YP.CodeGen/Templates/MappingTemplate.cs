@@ -28,7 +28,7 @@ namespace YP.CodeGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using YooPen.Core.Data;\r\nusing System.Data.Entity.ModelConfiguration;\r\nusing ");
+            this.Write("using YooPoon.Core.Data;\r\nusing System.Data.Entity.ModelConfiguration;\r\nusing ");
             
             #line 8 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
@@ -38,21 +38,21 @@ namespace YP.CodeGen.Templates
             this.Write(".Entity.Model;\r\n\r\npublic class ");
             
             #line 10 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.Replace("_","")));
             
             #line default
             #line hidden
             this.Write("Mapping : EntityTypeConfiguration<");
             
             #line 10 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.Replace("_","")));
             
             #line default
             #line hidden
             this.Write("Entity>, IMapping\r\n{\r\n\tpublic ");
             
             #line 12 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.Replace("_","")));
             
             #line default
             #line hidden
@@ -68,14 +68,14 @@ namespace YP.CodeGen.Templates
             #line 16 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
  foreach(var model in _eModels){
    var mappingModel = _mModels.FirstOrDefault(c =>c.FieldName == model.FieldName);
-	   if(mappingModel != null){ 
+	   if(mappingModel != null || model.Type.StartsWith("Enum")){ 
             
             #line default
             #line hidden
             this.Write("\t\tProperty(c => c.");
             
             #line 19 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName.Replace("_","")));
             
             #line default
             #line hidden
@@ -109,7 +109,7 @@ namespace YP.CodeGen.Templates
             this.Write("\t\tHasMany(c => c.");
             
             #line 21 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName.Replace("_","")));
             
             #line default
             #line hidden
@@ -123,7 +123,7 @@ namespace YP.CodeGen.Templates
             this.Write("\t\tHasOptional(c =>c.");
             
             #line 23 "E:\Yoopoon_Framework\YP.CodeGen\Templates\MappingTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName.Replace("_","")));
             
             #line default
             #line hidden

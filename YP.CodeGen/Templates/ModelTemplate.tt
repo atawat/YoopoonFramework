@@ -6,7 +6,7 @@
 <#@ import namespace="YP.CodeGen.TemplateModel" #>
 using System;
 using System.Collections.Generic;
-using YooPen.Core.Data;
+using YooPoon.Core.Data;
 
 namespace <#=_projectName#>.Entity.Model
 {
@@ -16,7 +16,7 @@ namespace <#=_projectName#>.Entity.Model
 		/// <summary>
 		/// <#=model.Description#>
 		/// </summary>
-		public virtual <#=model.Type#> <#=model.FieldName#> { get; set; }
+		public virtual <#=model.Type.Replace("_","")#> <#=model.FieldName.Replace("_","")#> { get; set; }
 <# }#>
 	}
 }

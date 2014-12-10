@@ -12,6 +12,11 @@ namespace YP.CodeGen.Helper
         private readonly string _tableName;
         private readonly string _projectName;
 
+        private string NormalizeTableName
+        {
+            get { return _tableName.Replace("_", ""); }
+        }
+
         public FileFactory(string projectName, string tableName)
         {
             _projectName = projectName;
@@ -22,66 +27,66 @@ namespace YP.CodeGen.Helper
 
         public void RenderEntityFile(List<EntityModel> models)
         {
-            if (!Directory.Exists(_outputPath + "Entity\\"+ _tableName +"\\"))
+            if (!Directory.Exists(_outputPath + "Entity\\" + NormalizeTableName + "\\"))
             {
-                Directory.CreateDirectory(_outputPath + "Entity\\" + _tableName + "\\");
+                Directory.CreateDirectory(_outputPath + "Entity\\" + NormalizeTableName + "\\");
             }
-            var entityOutputPath = _outputPath + "Entity\\" + _tableName + "\\" + _tableName + "Entity.cs";
-            var modelTemplate = new ModelTemplate(models, _tableName,_projectName);
+            var entityOutputPath = _outputPath + "Entity\\" + NormalizeTableName + "\\" + NormalizeTableName + "Entity.cs";
+            var modelTemplate = new ModelTemplate(models, NormalizeTableName, _projectName);
             var output = modelTemplate.TransformText();
             File.WriteAllText(entityOutputPath, output);
         }
 
         public void RenderMappingFile(List<MappingModel> models,List<EntityModel> eModels)
         {
-            if (!Directory.Exists(_outputPath + "Mappings\\" + _tableName + "\\"))
+            if (!Directory.Exists(_outputPath + "Mappings\\" + NormalizeTableName + "\\"))
             {
-                Directory.CreateDirectory(_outputPath + "Mappings\\" + _tableName + "\\");
+                Directory.CreateDirectory(_outputPath + "Mappings\\" + NormalizeTableName + "\\");
             }
-            var outputPath = _outputPath + "Mappings\\" + _tableName + "\\" + _tableName + "Mapping.cs";
-            var mappingTemplate = new MappingTemplate(models,eModels,_projectName,_tableName);
+            var outputPath = _outputPath + "Mappings\\" + NormalizeTableName + "\\" + NormalizeTableName + "Mapping.cs";
+            var mappingTemplate = new MappingTemplate(models, eModels, _projectName, _tableName);
             var output = mappingTemplate.TransformText();
             File.WriteAllText(outputPath, output);
         }
 
         public void RenderEnumFile(List<EnumModel> models)
         {
-            if (!Directory.Exists(_outputPath + "Entity\\" + _tableName + "\\"))
+            if (!Directory.Exists(_outputPath + "Entity\\" + NormalizeTableName + "\\"))
             {
-                Directory.CreateDirectory(_outputPath + "Entity\\" + _tableName + "\\");
+                Directory.CreateDirectory(_outputPath + "Entity\\" + NormalizeTableName + "\\");
             }
             var enumTemplate = new EnumTemplate(models,_projectName);
             var output = enumTemplate.TransformText();
-            var outputPath = _outputPath + "Entity\\" + _tableName + "\\" + "Enum" + _tableName + ".cs";
+            var outputPath = _outputPath + "Entity\\" + NormalizeTableName + "\\" + "Enum" + NormalizeTableName + ".cs";
             File.WriteAllText(outputPath, output);
         }
 
         public void RenderSearchFile(List<SearchModel> models)
         {
-            if (!Directory.Exists(_outputPath + "Entity\\" + _tableName + "\\"))
+            if (!Directory.Exists(_outputPath + "Entity\\" + NormalizeTableName + "\\"))
             {
-                Directory.CreateDirectory(_outputPath + "Entity\\" + _tableName + "\\");
+                Directory.CreateDirectory(_outputPath + "Entity\\" + NormalizeTableName + "\\");
             }
-            var searchTemplate = new ConditionTemplate(models,_tableName,_projectName);
+            var searchTemplate = new ConditionTemplate(models, NormalizeTableName, _projectName);
             var output = searchTemplate.TransformText();
-            var outputPath = _outputPath + "Entity\\" + _tableName + "\\" + _tableName + "SearchConditon.cs";
+            var outputPath = _outputPath + "Entity\\" + NormalizeTableName + "\\" + NormalizeTableName + "SearchConditon.cs";
             File.WriteAllText(outputPath, output);
         }
 
         public void RenderServiceFile(List<SearchModel> models)
         {
-            if (!Directory.Exists(_outputPath + "Services\\" + _tableName + "\\"))
+            if (!Directory.Exists(_outputPath + "Services\\" + NormalizeTableName + "\\"))
             {
-                Directory.CreateDirectory(_outputPath + "Services\\" + _tableName + "\\");
+                Directory.CreateDirectory(_outputPath + "Services\\" + NormalizeTableName + "\\");
             }
-            var serviceTemplate = new ServiceTemplate(_projectName,_tableName,models);
+            var serviceTemplate = new ServiceTemplate(_projectName,_tableName.Replace("_",""),models);
             var output = serviceTemplate.TransformText();
-            var outputPath = _outputPath + "Services\\" + _tableName + "\\" + _tableName + "Service.cs";
+            var outputPath = _outputPath + "Services\\" + NormalizeTableName + "\\" + NormalizeTableName + "Service.cs";
             File.WriteAllText(outputPath, output);
 
-            var interfaceTemplate = new IServiceTemplate(_projectName, _tableName);
+            var interfaceTemplate = new IServiceTemplate(_projectName, NormalizeTableName);
             var iOutPut = interfaceTemplate.TransformText();
-            var iOutPutPath = _outputPath + "Services\\" + _tableName + "\\I" + _tableName + "Service.cs";
+            var iOutPutPath = _outputPath + "Services\\" + NormalizeTableName + "\\I" + NormalizeTableName + "Service.cs";
             File.WriteAllText(iOutPutPath, iOutPut);
         }
     }

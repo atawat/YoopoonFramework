@@ -5,11 +5,11 @@
 <#@ import namespace="System.Collections.Generic" #>
 using System.Linq;
 using <#=_projectName#>.Entity.Model;
-using YooPen.Core.Autofac;
+using YooPoon.Core.Autofac;
 
 namespace <#=_projectName#>.Service.<#=_entityName#>
 {
-	public interface I<#=_entityName#>Services : IDependency
+	public interface I<#=_entityName#>Service : IDependency
 	{
 		<#=_entityName#>Entity Create (<#=_entityName#>Entity entity);
 
@@ -19,8 +19,8 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
 
 		<#=_entityName#>Entity Get<#=_entityName#>ById (int id);
 
-		IQueryable<<#=_entityName#>Entity> Get<#=_entityName#>sByCondition(<#=_entityName#>SeachCondition condition);
+		IQueryable<<#=_entityName#>Entity> Get<#=_entityName#>sByCondition(<#=_entityName#>SearchCondition condition);
 
-		int Get<#=_entityName#>Count (<#=_entityName#>SeachCondition condition);
+		int Get<#=_entityName#>Count (<#=_entityName#>SearchCondition condition);
 	}
 }

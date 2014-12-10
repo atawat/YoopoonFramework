@@ -29,8 +29,8 @@ namespace YP.CodeGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing YooPen.Core.Data;\r\n\r\nname" +
-                    "space ");
+            this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing YooPoon.Core.Data;\r\n\r\nnam" +
+                    "espace ");
             
             #line 11 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
@@ -61,14 +61,14 @@ namespace YP.CodeGen.Templates
             this.Write("\r\n\t\t/// </summary>\r\n\t\tpublic virtual ");
             
             #line 19 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.Type));
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.Type.Replace("_","")));
             
             #line default
             #line hidden
             this.Write(" ");
             
             #line 19 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName.Replace("_","")));
             
             #line default
             #line hidden

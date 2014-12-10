@@ -35,16 +35,22 @@ namespace YP.CodeGen.Templates
             
             #line default
             #line hidden
-            this.Write("namespace ");
             
             #line 8 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+ var nullableType = new []{"int","bool","float","double","decimal","Int32","char","DateTime"}; 
+            
+            #line default
+            #line hidden
+            this.Write("using System;\r\n\r\nnamespace ");
+            
+            #line 11 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
             
             #line default
             #line hidden
             this.Write(".Entity.Model\r\n{\r\n\tpublic class ");
             
-            #line 10 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 13 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
@@ -68,7 +74,7 @@ namespace YP.CodeGen.Templates
 
 ");
             
-            #line 27 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 30 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
  foreach(var model in _models){
 	if(model.Type == EnumSearchType.In){ 
             
@@ -76,98 +82,122 @@ namespace YP.CodeGen.Templates
             #line hidden
             this.Write("\t\tpublic ");
             
-            #line 29 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 32 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchType));
             
             #line default
             #line hidden
             this.Write("[] ");
             
-            #line 29 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 32 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("s { get; set; }\r\n");
             
-            #line 30 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 33 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
 } else if (model.Type == EnumSearchType.Like) {
             
             #line default
             #line hidden
             this.Write("\t\tpublic ");
             
-            #line 31 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 34 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchType));
             
             #line default
             #line hidden
-            this.Write("? ");
             
-            #line 31 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 34 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture((nullableType.Contains(model.SearchType) || model.SearchType.StartsWith("Enum"))?"?":""));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 34 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(" { get; set; }\r\n");
             
-            #line 32 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 35 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
 } else if (model.Type == EnumSearchType.Equal) {
             
             #line default
             #line hidden
             this.Write("\t\tpublic ");
             
-            #line 33 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 36 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchType));
             
             #line default
             #line hidden
-            this.Write("? ");
             
-            #line 33 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 36 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture((nullableType.Contains(model.SearchType) || model.SearchType.StartsWith("Enum"))?"?":""));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 36 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(" { get; set; }\r\n");
             
-            #line 34 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 37 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
 }else if (model.Type == EnumSearchType.Range) {
             
             #line default
             #line hidden
             this.Write("\t\tpublic ");
             
-            #line 35 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 38 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchType));
             
             #line default
             #line hidden
-            this.Write("? ");
             
-            #line 35 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 38 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture((nullableType.Contains(model.SearchType) || model.SearchType.StartsWith("Enum"))?"?":""));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 38 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("Begin { get; set; }\r\n\r\n\t\tpublic ");
             
-            #line 37 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 40 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchType));
             
             #line default
             #line hidden
-            this.Write("? ");
             
-            #line 37 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 40 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture((nullableType.Contains(model.SearchType) || model.SearchType.StartsWith("Enum"))?"?":""));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 40 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("End { get; set; }\r\n");
             
-            #line 38 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 41 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
 } else {
 	  orderName.Add(model.SearchName);
 }
@@ -176,69 +206,69 @@ namespace YP.CodeGen.Templates
             #line hidden
             this.Write("\r\n");
             
-            #line 42 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 45 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 43 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 46 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
  if(orderName.Count() >0){ 
             
             #line default
             #line hidden
             this.Write("\t\tpublic Enum");
             
-            #line 44 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 47 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("SearchOrderBy? OrderBy { get; set; }\r\n");
             
-            #line 45 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 48 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\t}\r\n\r\n");
             
-            #line 48 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 51 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
  if(orderName.Count() >0){ 
             
             #line default
             #line hidden
             this.Write("\tpublic enum Enum");
             
-            #line 49 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 52 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("SearchOrderBy\r\n\t{\r\n");
             
-            #line 51 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 54 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
  foreach(var name in orderName) {
             
             #line default
             #line hidden
             this.Write("\t\tOrderBy");
             
-            #line 52 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 55 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 53 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 56 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\t}\r\n");
             
-            #line 55 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
+            #line 58 "E:\Yoopoon_Framework\YP.CodeGen\Templates\ConditionTemplate.tt"
 }
             
             #line default
