@@ -13,13 +13,14 @@ namespace YooPoon.Data.EntityFramework
 {
     public class EfDbContext : DbContext, IDbContext
     {
-        private readonly ITypeFinder _typeFinder;
+        private ITypeFinder _typeFinder;
 
         #region Ctor
 
         public EfDbContext()
         {
             _typeFinder = new AppDomainTypeFinder();
+            //_typeFinder = new WebAppTypeFinder();
         }
 
 
@@ -28,6 +29,7 @@ namespace YooPoon.Data.EntityFramework
         {
             //((IObjectContextAdapter) this).ObjectContext.ContextOptions.LazyLoadingEnabled = true;
             _typeFinder = new AppDomainTypeFinder();
+            //_typeFinder = new WebAppTypeFinder();
         }
 
         #endregion
@@ -41,6 +43,9 @@ namespace YooPoon.Data.EntityFramework
             //var typessToRegister = Assembly.Load("ML.Entity").GetTypes()
             //.Where(type => !String.IsNullOrEmpty(type.Namespace))
             //.Where(type => type.BaseType != null && type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
+            if(_typeFinder == null)
+                //_typeFinder = new WebAppTypeFinder();
+                _typeFinder = new AppDomainTypeFinder();
             var typesToRegister = _typeFinder.FindClassesOfType(typeof(IMapping),false)
                 .Where(type => !String.IsNullOrEmpty(type.Namespace))
                 .Where(type => type.BaseType != null && type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));

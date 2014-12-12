@@ -127,7 +127,7 @@ namespace YP.CodeGen.Helper
                             {
                                 search.Add(new SearchModel
                                 {
-                                    SearchName = entity[index].FieldName,
+                                    SearchName = entity[index].FieldName.Replace("_", ""),
                                     Type = EnumSearchType.Order
                                 });
                             }

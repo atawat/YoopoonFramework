@@ -93,6 +93,13 @@
     <Compile Include="Authentication\Entity\RoleStatus.cs" />
     <Compile Include="Authentication\FormsAuthenticationService.cs" />
     <Compile Include="Authentication\IAuthenticationService.cs" />
+    <Compile Include="Authentication\Mapping\ControllerActionMapping.cs" />
+    <Compile Include="Authentication\Mapping\RoleMapping.cs" />
+    <Compile Include="Authentication\Mapping\RolePermissionMapping.cs" />
+    <Compile Include="Authentication\Services\ControllerActionService.cs" />
+    <Compile Include="Authentication\Services\IControllerActionService.cs" />
+    <Compile Include="Authentication\Services\IRoleService.cs" />
+    <Compile Include="Authentication\Services\RoleService.cs" />
     <Compile Include="Dependency\DependencyRegistrar.cs" />
     <Compile Include="MVC\WorkContext.cs" />
     <Compile Include="MVC\YpAuthorizeAttribute.cs" />
@@ -101,9 +108,15 @@
     <Compile Include="MVC\YpMVCViewPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\Entity\UserRole.cs" />
-    <Compile Include="User\IUserService.cs" />
+    <Compile Include="User\Entity\UserSearchConditon.cs" />
+    <Compile Include="User\Mapping\UserRoleMapping.cs" />
+    <Compile Include="User\Services\IRoleService.cs" />
+    <Compile Include="User\Services\IUserService.cs" />
     <Compile Include="User\Entity\UserBase.cs" />
+    <Compile Include="User\Mapping\UserMapping.cs" />
     <Compile Include="User\PasswordHelper.cs" />
+    <Compile Include="User\Services\RoleService.cs" />
+    <Compile Include="User\Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Yoopoon.Common\YooPoon.Common.csproj">

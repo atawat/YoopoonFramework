@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using YooPoon.Core.Data;
 
 namespace YooPoon.WebFramework.User.Entity
@@ -35,6 +36,16 @@ namespace YooPoon.WebFramework.User.Entity
         /// <summary>
         /// 用户角色
         /// </summary>
-        public virtual ICollection<UserRole> UserRoles { get; set; } 
+        public virtual ICollection<UserRole> UserRoles { get; set; }
+
+        /// <summary>
+        /// 注册时间
+        /// </summary>
+        public DateTime RegTime { get; set; }
+
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public int Status { get; set; }
     }
 }

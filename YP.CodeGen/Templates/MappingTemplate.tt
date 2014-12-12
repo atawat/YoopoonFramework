@@ -7,21 +7,24 @@ using YooPoon.Core.Data;
 using System.Data.Entity.ModelConfiguration;
 using <#=_projectName#>.Entity.Model;
 
-public class <#=_entityName.Replace("_","")#>Mapping : EntityTypeConfiguration<<#=_entityName.Replace("_","")#>Entity>, IMapping
+namespace <#=_projectName#>.Entity.Mappings.<#=_entityName.Replace("_","")#>
 {
-	public <#=_entityName.Replace("_","")#>Mapping()
+	public class <#=_entityName.Replace("_","")#>Mapping : EntityTypeConfiguration<<#=_entityName.Replace("_","")#>Entity>, IMapping
 	{
-		ToTable("<#=_entityName#>");
-		HasKey(c => c.Id);
+		public <#=_entityName.Replace("_","")#>Mapping()
+		{
+			ToTable("<#=_entityName#>");
+			HasKey(c => c.Id);
 <# foreach(var model in _eModels){
-   var mappingModel = _mModels.FirstOrDefault(c =>c.FieldName == model.FieldName);
-	   if(mappingModel != null || model.Type.StartsWith("Enum")){ #>
-		Property(c => c.<#=model.FieldName.Replace("_","")#>).HasColumnType("<#=mappingModel.ColumnType#>")<#=string.IsNullOrEmpty(mappingModel.TypeLength)?"":".HasMaxLength(" + mappingModel.TypeLength +")"#><#=mappingModel.IsNull?".IsOptional()":""#>;
+	 var mappingModel = _mModels.FirstOrDefault(c =>c.FieldName == model.FieldName);
+		   if(mappingModel != null || model.Type.StartsWith("Enum")){ #>
+			Property(c => c.<#=model.FieldName.Replace("_","")#>).HasColumnType("<#=mappingModel.ColumnType#>")<#=string.IsNullOrEmpty(mappingModel.TypeLength)?"":".HasMaxLength(" + mappingModel.TypeLength +")"#><#=mappingModel.IsNull?".IsOptional()":""#>;
 <# }else if(model.FieldName.StartsWith("IList")){ #>
-		HasMany(c => c.<#=model.FieldName.Replace("_","")#>));
+			HasMany(c => c.<#=model.FieldName.Replace("_","")#>));
 <#}else{#>
-		HasOptional(c =>c.<#=model.FieldName.Replace("_","")#>);
+			HasOptional(c =>c.<#=model.FieldName.Replace("_","")#>);
 <#}
    } #>
+		}
 	}
 }

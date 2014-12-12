@@ -124,8 +124,9 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
                     query = query.Where(q => condition.<#=model.SearchName#>s.Contains(q.<#=model.SearchName#>));
                 }
 <#}				else if(model.Type == EnumSearchType.Order){
- orderNames.Add(model.SearchName);}
-				if(orderNames.Count() > 0){#>
+ orderNames.Add(model.SearchName);}#>
+<#}#>
+<#				if(orderNames.Count() > 0){#>
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
@@ -139,7 +140,7 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
 					
 				}
 <# }#>
-<#}#>
+
 				if (condition.Page.HasValue && condition.PageCount.HasValue)
                 {
                     query = query.Skip((condition.Page.Value - 1)*condition.PageCount.Value).Take(condition.PageCount.Value);

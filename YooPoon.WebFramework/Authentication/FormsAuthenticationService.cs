@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Web;
 using System.Web.Security;
-using YooPoon.WebFramework.User;
 using YooPoon.WebFramework.User.Entity;
+using YooPoon.WebFramework.User.Services;
 
 namespace YooPoon.WebFramework.Authentication
 {
-    public class FormsAuthenticationService:IAuthenticationService
+    public class FormsAuthenticationService : IAuthenticationService
     {
-          private readonly HttpContextBase _httpContext;
+        private readonly HttpContextBase _httpContext;
         private readonly IUserService _userService;
 
         private readonly TimeSpan _expirationTimeSpan;
@@ -20,7 +20,7 @@ namespace YooPoon.WebFramework.Authentication
         /// </summary>
         /// <param name="httpContext">HTTP context</param>
         /// <param name="userService">UserService</param>
-        public FormsAuthenticationService(HttpContextBase httpContext,IUserService userService)
+        public FormsAuthenticationService(HttpContextBase httpContext, IUserService userService)
         {
             _httpContext = httpContext;
             _expirationTimeSpan = FormsAuthentication.Timeout;
@@ -39,8 +39,8 @@ namespace YooPoon.WebFramework.Authentication
                 now.Add(_expirationTimeSpan),
                 createPersistentCookie,
                 user.UserName,
-                
-                
+
+
                 FormsAuthentication.FormsCookiePath);
 
             var encryptedTicket = FormsAuthentication.Encrypt(ticket);

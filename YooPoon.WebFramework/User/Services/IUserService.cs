@@ -1,8 +1,10 @@
-﻿using YooPoon.WebFramework.User.Entity;
+﻿using System.Linq;
+using YooPoon.Core.Autofac;
+using YooPoon.WebFramework.User.Entity;
 
-namespace YooPoon.WebFramework.User
+namespace YooPoon.WebFramework.User.Services
 {
-    public interface IUserService
+    public interface IUserService : IDependency
     {
         /// <summary>
         /// 增加用户
@@ -29,6 +31,15 @@ namespace YooPoon.WebFramework.User
         /// <returns></returns>
         bool ModifyUser(UserBase user);
 
-        UserBase GetUserByName(string usernameOrEmail); 
+        /// <summary>
+        /// 根据用户名获取用户
+        /// </summary>
+        /// <param name="usernameOrEmail"></param>
+        /// <returns></returns>
+        UserBase GetUserByName(string usernameOrEmail);
+
+        IQueryable<UserBase> GetUserByCondition(UserSearchCondition condition);
+
+        int GetUserCountByCondition(UserSearchCondition condition);
     }
 }
