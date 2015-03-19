@@ -42,9 +42,12 @@ namespace YooPoon.WebFramework.MVC
         {
             if (_httpContext != null && _httpContext.Response != null)
             {
-                var cookie = new HttpCookie(UserCookieName);
-                cookie.HttpOnly = true;
-                cookie.Value = userName;
+                var cookie = new HttpCookie(UserCookieName)
+                {
+                    HttpOnly = true,
+                    Value = HttpUtility.UrlEncode(userName)
+                };
+                ;
                 if (string.IsNullOrEmpty(userName))
                 {
                     cookie.Expires = DateTime.Now.AddMonths(-1);

@@ -14,10 +14,10 @@ namespace YooPoon.Core.Autofac
             //other dependencies
             //containerManager.AddComponentInstance<NopConfig>(configuration, "nop.configuration");
             //containerManager.AddComponentInstance<IEngine>(engine, "nop.engine");
-            containerManager.AddComponentInstance<ContainerConfigurer>(this, "YooPen.ContainerConfigurer");
+            containerManager.AddComponentInstance<ContainerConfigurer>(this, "YooPoon.ContainerConfigurer");
 
             //type finder
-            containerManager.AddComponent<ITypeFinder, WebAppTypeFinder>("yoopen.typeFinder");
+            containerManager.AddComponent<ITypeFinder, WebAppTypeFinder>("Yoopen.typeFinder");
 
             //register dependencies provided by other assemblies
             var typeFinder = containerManager.Resolve<ITypeFinder>();
