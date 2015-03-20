@@ -140,6 +140,10 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
 					
 				}
 <# }#>
+				else
+				{
+					query = query.OrderBy(q=>q.<#=orderNames.First()#>);
+				}
 
 				if (condition.Page.HasValue && condition.PageCount.HasValue)
                 {
