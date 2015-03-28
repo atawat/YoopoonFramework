@@ -76,7 +76,14 @@ namespace YooPoon.WebFramework.Dependency
 
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerHttpRequest();
 
-            builder.RegisterAssemblyTypes(assemblies).Where(t=>typeof(IDependency).IsAssignableFrom(t) && t != typeof(IDependency)).AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(assemblies)
+                .Where(t => typeof (IDependency).IsAssignableFrom(t) && t != typeof (IDependency))
+                .AsImplementedInterfaces()
+                .InstancePerRequest();
+            builder.RegisterAssemblyTypes(assemblies)
+                .Where(t => typeof (ISingletonDependency).IsAssignableFrom(t) && t != typeof (ISingletonDependency))
+                .AsImplementedInterfaces()
+                .SingleInstance();
 
             //注册YpHnadleError
             builder.RegisterType<YpHandleErrorAttribute>().InstancePerRequest();
