@@ -2,7 +2,7 @@
 
 namespace YooPoon.Core.Cache
 {
- public interface ICacheManager:IDependency
+    public interface ICacheManager : IDependency
     {
         /// <summary>
         /// 依据键获取缓存的内容值
@@ -43,4 +43,5 @@ namespace YooPoon.Core.Cache
         /// 清空缓存
         /// </summary>
         void Clear();
+    }
 }
