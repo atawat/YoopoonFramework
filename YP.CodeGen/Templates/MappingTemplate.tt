@@ -19,7 +19,7 @@ namespace <#=_projectName#>.Entity.Mappings.<#=_entityName.Replace("_","")#>
 	 var mappingModel = _mModels.FirstOrDefault(c =>c.FieldName == model.FieldName);
 		   if(mappingModel != null || model.Type.StartsWith("Enum")){ #>
 			Property(c => c.<#=model.FieldName.Replace("_","")#>).HasColumnType("<#=mappingModel.ColumnType#>")<#=string.IsNullOrEmpty(mappingModel.TypeLength)?"":".HasMaxLength(" + mappingModel.TypeLength +")"#><#=mappingModel.IsNull?".IsOptional()":""#>;
-<# }else if(model.FieldName.StartsWith("IList")){ #>
+<# }else if(model.Type.StartsWith("IList")){ #>
 			HasMany(c => c.<#=model.FieldName.Replace("_","")#>));
 <#}else{#>
 			HasOptional(c =>c.<#=model.FieldName.Replace("_","")#>);

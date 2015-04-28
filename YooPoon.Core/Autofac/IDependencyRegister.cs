@@ -2,7 +2,7 @@
 
 namespace YooPoon.Core.Autofac
 {
-    public interface IDependencyRegistrar
+    public interface IDependencyRegister
     {
         void Register(ContainerBuilder builder, ITypeFinder typeFinder);
 

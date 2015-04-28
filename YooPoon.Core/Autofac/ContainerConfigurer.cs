@@ -17,16 +17,16 @@ namespace YooPoon.Core.Autofac
             containerManager.AddComponentInstance<ContainerConfigurer>(this, "YooPoon.ContainerConfigurer");
 
             //type finder
-            containerManager.AddComponent<ITypeFinder, WebAppTypeFinder>("Yoopen.typeFinder");
+            containerManager.AddComponent<ITypeFinder, WebAppTypeFinder>("YooPoon.TypeFinder");
 
             //register dependencies provided by other assemblies
             var typeFinder = containerManager.Resolve<ITypeFinder>();
             containerManager.UpdateContainer(x =>
             {
-                var drTypes = typeFinder.FindClassesOfType<IDependencyRegistrar>();
-                var drInstances = new List<IDependencyRegistrar>();
+                var drTypes = typeFinder.FindClassesOfType<IDependencyRegister>();
+                var drInstances = new List<IDependencyRegister>();
                 foreach (var drType in drTypes)
-                    drInstances.Add((IDependencyRegistrar)Activator.CreateInstance(drType));
+                    drInstances.Add((IDependencyRegister)Activator.CreateInstance(drType));
                 //sort
                 drInstances = drInstances.AsQueryable().OrderBy(t => t.Order).ToList();
                 foreach (var dependencyRegistrar in drInstances)

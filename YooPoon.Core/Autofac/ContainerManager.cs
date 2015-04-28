@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Autofac;
+using Autofac.Core;
 using Autofac.Integration.Mvc;
 
 namespace YooPoon.Core.Autofac
@@ -123,6 +124,20 @@ namespace YooPoon.Core.Autofac
                 scope = Scope();
             }
             return scope.Resolve(type);
+        }
+
+        public T Resolve<T>(Parameter[] parameter, string key = "", ILifetimeScope scope = null) where T : class
+        {
+            if (scope == null)
+            {
+                //no scope specified
+                scope = Scope();
+            }
+            if (string.IsNullOrEmpty(key))
+            {
+                return scope.Resolve<T>(parameter);
+            }
+            return scope.ResolveKeyed<T>(key, parameter);
         }
 
         public T[] ResolveAll<T>(string key = "", ILifetimeScope scope = null)

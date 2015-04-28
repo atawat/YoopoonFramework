@@ -2,6 +2,7 @@
 using System.Web;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
 using YooPoon.Core.Autofac;
 using YooPoon.Core.Data;
 using YooPoon.Core.Site;
@@ -13,7 +14,7 @@ namespace YooPoon.WebFramework.Dependency
     /// <summary>
     /// 依赖注入注册
     /// </summary>
-    public class DependencyRegistrar:IDependencyRegistrar
+    public class DependencyRegister:IDependencyRegister
     {
         public virtual void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
@@ -46,6 +47,8 @@ namespace YooPoon.WebFramework.Dependency
 
             //controllers
             builder.RegisterControllers(assemblies);
+            //ApiControllers
+            builder.RegisterApiControllers(assemblies);
 
             //View
             //builder.RegisterSource(new ViewRegistrationSource());

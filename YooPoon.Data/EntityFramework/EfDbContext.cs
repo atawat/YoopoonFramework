@@ -58,6 +58,11 @@ namespace YooPoon.Data.EntityFramework
             base.OnModelCreating(modelBuilder);
         }
 
+        public void BaseOnModelCreate(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
 
         /// <summary>
         /// Attach an entity to the context or return an already attached entity (if it was already attached)

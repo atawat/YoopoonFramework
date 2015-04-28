@@ -70,7 +70,7 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
 		{
 			try
             {
-                return _<#=_entityName.ToLower()#>Repository.GetById(id); ;
+                return _<#=_entityName.ToLower()#>Repository.GetById(id);
             }
             catch (Exception e)
             {
@@ -96,7 +96,7 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
                 }
 <# }			else if(model.Type == EnumSearchType.Equal){
 				if(model.SearchType =="string"){#>
-				if (string.IsNullOrEmpty(condition.<#=model.SearchName#>))
+				if (!string.IsNullOrEmpty(condition.<#=model.SearchName#>))
                 {
                     query = query.Where(q => q.<#=model.SearchName#> == condition.<#=model.SearchName#>);
                 }
@@ -133,7 +133,7 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
                     {
 <#						foreach(var name in orderNames){ #>
 						case Enum<#=_entityName#>SearchOrderBy.OrderBy<#=name#>:
-							query = condition.isDescending?query.OrderByDescending(q=>q.<#=name#>):query.OrderBy(q=>q.<#=name#>);
+							query = condition.IsDescending?query.OrderByDescending(q=>q.<#=name#>):query.OrderBy(q=>q.<#=name#>);
 							break;
 <# }#>
                     }
@@ -175,7 +175,7 @@ namespace <#=_projectName#>.Service.<#=_entityName#>
                 }
 <# }			else if(model.Type == EnumSearchType.Equal){
 				if(model.SearchType =="string"){#>
-				if (string.IsNullOrEmpty(condition.<#=model.SearchName#>))
+				if (!string.IsNullOrEmpty(condition.<#=model.SearchName#>))
                 {
                     query = query.Where(q => q.<#=model.SearchName#> == condition.<#=model.SearchName#>);
                 }

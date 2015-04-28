@@ -89,7 +89,7 @@
     <Compile Include="Autofac\ContainerConfigurer.cs" />
     <Compile Include="Autofac\ContainerManager.cs" />
     <Compile Include="Autofac\IDependency.cs" />
-    <Compile Include="Autofac\IDependencyRegistrar.cs" />
+    <Compile Include="Autofac\IDependencyRegister.cs" />
     <Compile Include="Autofac\InitializeContainer.cs" />
     <Compile Include="Autofac\ITypeFinder.cs" />
     <Compile Include="Autofac\WebAppTypeFinder.cs" />
