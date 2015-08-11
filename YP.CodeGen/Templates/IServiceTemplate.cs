@@ -18,7 +18,7 @@ namespace YP.CodeGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+    #line 1 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class IServiceTemplate : IServiceTemplateBase
     {
@@ -30,112 +30,112 @@ namespace YP.CodeGen.Templates
         {
             this.Write("using System.Linq;\r\nusing ");
             
-            #line 7 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 7 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
             
             #line default
             #line hidden
             this.Write(".Entity.Model;\r\nusing YooPoon.Core.Autofac;\r\n\r\nnamespace ");
             
-            #line 10 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 10 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
             
             #line default
             #line hidden
             this.Write(".Service.");
             
-            #line 10 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 10 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n\tpublic interface I");
             
-            #line 12 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 12 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Service : IDependency\r\n\t{\r\n\t\t");
             
-            #line 14 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 14 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity Create (");
             
-            #line 14 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 14 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity entity);\r\n\r\n\t\tbool Delete(");
             
-            #line 16 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 16 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity entity);\r\n\r\n\t\t");
             
-            #line 18 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 18 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity Update (");
             
-            #line 18 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 18 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity entity);\r\n\r\n\t\t");
             
-            #line 20 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 20 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity Get");
             
-            #line 20 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 20 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("ById (int id);\r\n\r\n\t\tIQueryable<");
             
-            #line 22 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 22 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity> Get");
             
-            #line 22 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 22 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("sByCondition(");
             
-            #line 22 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 22 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("SearchCondition condition);\r\n\r\n\t\tint Get");
             
-            #line 24 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 24 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Count (");
             
-            #line 24 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
+            #line 24 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\IServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default

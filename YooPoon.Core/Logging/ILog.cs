@@ -3,7 +3,7 @@ using YooPoon.Core.Autofac;
 
 namespace YooPoon.Core.Logging
 {
-    public interface ILog:IDependency
+    public interface ILog:ISingletonDependency
     {
         void Debug(string message);
 

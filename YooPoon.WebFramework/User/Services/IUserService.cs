@@ -37,6 +37,12 @@ namespace YooPoon.WebFramework.User.Services
         /// <param name="usernameOrEmail"></param>
         /// <returns></returns>
         UserBase GetUserByName(string usernameOrEmail);
+        /// <summary>
+        /// 根据id查用户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        UserBase GetUserById(int id);
 
         IQueryable<UserBase> GetUserByCondition(UserSearchCondition condition);
 

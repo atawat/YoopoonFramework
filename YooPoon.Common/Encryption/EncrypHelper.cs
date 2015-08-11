@@ -120,6 +120,10 @@ namespace YooPoon.Common.Encryption
         /// <returns></returns>
         public static string Decrypt(string encryptedString, string key)
         {
+            if (encryptedString == null || key == null)
+            {
+                return null;
+            }
             byte[] btKey = Convert.FromBase64String(key).Take(8).ToArray();
 
             byte[] btIV = Convert.FromBase64String(key).Reverse().Take(8).ToArray(); ;
@@ -128,7 +132,7 @@ namespace YooPoon.Common.Encryption
 
             using (MemoryStream ms = new MemoryStream())
             {
-                byte[] inData = Convert.FromBase64String(encryptedString);
+                byte[] inData = Convert.FromBase64String(HttpUtility.UrlDecode(encryptedString));
                 try
                 {
                     using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(btKey, btIV), CryptoStreamMode.Write))

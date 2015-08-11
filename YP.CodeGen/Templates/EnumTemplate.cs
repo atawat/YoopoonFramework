@@ -18,7 +18,7 @@ namespace YP.CodeGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
+    #line 1 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class EnumTemplate : EnumTemplateBase
     {
@@ -29,56 +29,56 @@ namespace YP.CodeGen.Templates
         public virtual string TransformText()
         {
             
-            #line 6 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
+            #line 6 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
  foreach (var model in _models) { 
             
             #line default
             #line hidden
             this.Write("\r\nnamespace ");
             
-            #line 8 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
+            #line 8 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
             
             #line default
             #line hidden
             this.Write(".Entity.Model\r\n{\r\n\r\n\tpublic enum ");
             
-            #line 11 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
+            #line 11 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.EnumName));
             
             #line default
             #line hidden
             this.Write("\r\n\t{\r\n");
             
-            #line 13 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
+            #line 13 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
  foreach (var value in model.Values) { 
             
             #line default
             #line hidden
             this.Write("\t\t/// <summary>\r\n\t\t/// ");
             
-            #line 15 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
+            #line 15 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(value.Description));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t/// </summary>\r\n\t\t");
             
-            #line 17 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
+            #line 17 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(value.Attribute));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 18 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
+            #line 18 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t}\r\n}\r\n");
             
-            #line 21 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
+            #line 21 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\EnumTemplate.tt"
  } 
             
             #line default

@@ -9,6 +9,7 @@ namespace YooPoon.WebFramework.User.Entity
         public DateTime? EndTime { get; set; }
 
         public int[] Ids { get; set; }
+        public string UserName { get; set; }
 
         public int? Status { get; set; }
 

@@ -19,7 +19,7 @@ namespace YP.CodeGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
+    #line 1 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class ModelTemplate : ModelTemplateBase
     {
@@ -32,49 +32,49 @@ namespace YP.CodeGen.Templates
             this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing YooPoon.Core.Data;\r\n\r\nnam" +
                     "espace ");
             
-            #line 11 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
+            #line 11 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
             
             #line default
             #line hidden
             this.Write(".Entity.Model\r\n{\r\n\tpublic class ");
             
-            #line 13 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
+            #line 13 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity : IBaseEntity\r\n\t{\r\n");
             
-            #line 15 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
+            #line 15 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
  foreach(var model in _models){
             
             #line default
             #line hidden
             this.Write("\t\t/// <summary>\r\n\t\t/// ");
             
-            #line 17 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
+            #line 17 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.Description));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t/// </summary>\r\n\t\tpublic virtual ");
             
-            #line 19 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
+            #line 19 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.Type.Replace("_","")));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 19 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
+            #line 19 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.FieldName.Replace("_","")));
             
             #line default
             #line hidden
             this.Write(" { get; set; }\r\n");
             
-            #line 20 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
+            #line 20 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ModelTemplate.tt"
  }
             
             #line default

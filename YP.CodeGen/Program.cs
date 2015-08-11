@@ -55,6 +55,7 @@ namespace YP.CodeGen
             Console.WriteLine("模板读取完毕，开始生成代码");
             if (CreateCodeFiles(factModel))
                 Console.WriteLine("代码生成完毕");
+            Console.ReadLine();
         }
 
         private static bool CreateCodeFiles(WorkGroupModel model)
@@ -69,6 +70,8 @@ namespace YP.CodeGen
                     fac.RenderEnumFile(sheet.Enums);
                     fac.RenderSearchFile(sheet.Search);
                     fac.RenderServiceFile(sheet.Search);
+                    fac.RenderControllerFile(sheet.Search, sheet.Entity);
+                    fac.RenderViewModel(sheet.Entity, sheet.Enums);
                 }
                 return true;
             }

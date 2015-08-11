@@ -1,0 +1,90 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Web.Http;
+using System.Web.Http.Cors;
+using <#=_projectName#>.Entity.Model;
+using <#=_projectName#>.Service.<#=_tableName#>;
+using YooPoon.Core.Site;
+using YooPoon.WebFramework.API;
+using <#=_projectName#>.Models;
+
+namespace <#=_projectName#>.Controllers
+{
+	public class <#=_tableName#>Controller : ApiController
+	{
+		private readonly I<#=_tableName#>Service _<#=_tableName#>Service;
+
+		public <#=_tableName#>Controller(I<#=_tableName#>Service <#=_tableName#>Service)
+		{
+			_<#=_tableName#>Service = <#=_tableName#>Service;
+		}
+
+		public <#=_tableName#>Model Get(int id)
+		{
+			var entity =_<#=_tableName#>Service.Get<#=_tableName#>ById(id);
+			var model = new <#=_tableName#>Model
+			{
+<# foreach(var filed in _entityModels){ if(filed.IsVirtual) continue;#>
+				<#=filed.FieldName#> = entity.<#=filed.FieldName#>,<#}#>
+			};
+			return model;
+		}
+
+		public List<<#=_tableName#>Model> Get(<#=_tableName#>SearchCondition condition)
+		{
+			var model = _<#=_tableName#>Service.Get<#=_tableName#>sByCondition(condition).Select(c=>new <#=_tableName#>Model
+			{
+<# foreach(var filed in _entityModels){ if(filed.IsVirtual) continue;#>
+				<#=filed.FieldName#> = c.<#=filed.FieldName#>,
+<#}#>
+			}).ToList();
+			return model;
+		}
+
+		public bool Post(<#=_tableName#>Model model)
+		{
+			var entity = new <#=_tableName#>Entity
+			{
+<# foreach(var filed in _entityModels){ if(filed.FieldName =="Id" || filed.IsVirtual) continue;#>
+				<#=filed.FieldName#> = model.<#=filed.FieldName#>,
+<#}#>
+			};
+			if(_<#=_tableName#>Service.Create(entity).Id > 0)
+			{
+				return true;
+			}
+			return false;
+		}
+
+		public bool Put(<#=_tableName#>Model model)
+		{
+			var entity = _<#=_tableName#>Service.Get<#=_tableName#>ById(model.Id);
+			if(entity == null)
+				return false;
+<# foreach(var filed in _entityModels){ if(filed.FieldName =="Id" || filed.IsVirtual) continue;#>
+			entity.<#=filed.FieldName#> = model.<#=filed.FieldName#>;
+<#}#>
+			if(_<#=_tableName#>Service.Update(entity) != null)
+				return true;
+			return false;
+		}
+
+		public bool Delete(int id)
+		{
+			var entity = _<#=_tableName#>Service.Get<#=_tableName#>ById(id);
+			if(entity == null)
+				return false;
+			if(_<#=_tableName#>Service.Delete(entity))
+				return true;
+			return false;
+		}
+	}
+}

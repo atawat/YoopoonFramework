@@ -15,5 +15,12 @@ namespace YooPoon.WebFramework.User.Services
         Role CreateRole(Role role);
 
         bool DeleteRole(Role role);
+
+        /// <summary>
+        /// 查询该名字的规则是否存在
+        /// </summary>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
+        Role GetRoleByName(string roleName);
     }
 }

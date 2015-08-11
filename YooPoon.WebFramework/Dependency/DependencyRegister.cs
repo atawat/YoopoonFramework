@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Web;
+using System.Web.Http;
+using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
@@ -7,6 +9,7 @@ using YooPoon.Core.Autofac;
 using YooPoon.Core.Data;
 using YooPoon.Core.Site;
 using YooPoon.Data.EntityFramework;
+using YooPoon.WebFramework.API;
 using YooPoon.WebFramework.MVC;
 
 namespace YooPoon.WebFramework.Dependency
@@ -26,22 +29,22 @@ namespace YooPoon.WebFramework.Dependency
                 //(new FakeHttpContext("~/") as HttpContextBase)
                 )
                 .As<HttpContextBase>()
-                .InstancePerHttpRequest();
+                .InstancePerRequest();
             builder.Register(c => c.Resolve<HttpContextBase>().Request)
                 .As<HttpRequestBase>()
-                .InstancePerHttpRequest();
+                .InstancePerRequest();
             builder.Register(c => c.Resolve<HttpContextBase>().Response)
                 .As<HttpResponseBase>()
-                .InstancePerHttpRequest();
+                .InstancePerRequest();
             builder.Register(c => c.Resolve<HttpContextBase>().Server)
                 .As<HttpServerUtilityBase>()
-                .InstancePerHttpRequest();
+                .InstancePerRequest();
             builder.Register(c => c.Resolve<HttpContextBase>().Session)
                 .As<HttpSessionStateBase>()
-                .InstancePerHttpRequest();
+                .InstancePerRequest();
 
             //web helper
-            //builder.RegisterType<WebHelper>().As<IWebHelper>().InstancePerHttpRequest();
+            //builder.RegisterType<WebHelper>().As<IWebHelper>().InstancePerRequest();
 
             var assemblies = typeFinder.GetAssemblies().ToArray();
 
@@ -69,15 +72,15 @@ namespace YooPoon.WebFramework.Dependency
                 //dataProvider.InitConnectionFactory();
                 ((SqlServerDataProvider)dataProvider).InitDatabase();
 
-                builder.Register<IDbContext>(c => new EfDbContext(dataProviderSettings.DataConnectionString)).InstancePerHttpRequest();
+                builder.Register<IDbContext>(c => new EfDbContext(dataProviderSettings.DataConnectionString)).InstancePerRequest();
             }
             else
             {
-                builder.Register<IDbContext>(c => new EfDbContext(dataSettingsManager.LoadSettings().DataConnectionString)).InstancePerHttpRequest();
+                builder.Register<IDbContext>(c => new EfDbContext(dataSettingsManager.LoadSettings().DataConnectionString)).InstancePerRequest();
             }
 
 
-            builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerHttpRequest();
+            builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerRequest();
 
             builder.RegisterAssemblyTypes(assemblies)
                 .Where(t => typeof (IDependency).IsAssignableFrom(t) && t != typeof (IDependency))
@@ -88,13 +91,34 @@ namespace YooPoon.WebFramework.Dependency
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
-            //注册YpHnadleError
-            builder.RegisterType<YpHandleErrorAttribute>().InstancePerRequest();
-
             //IWorkContext
-            builder.RegisterType<WorkContext>().As<IWorkContext>().InstancePerHttpRequest();
+            builder.RegisterType<WorkContext>().As<IWorkContext>().InstancePerRequest();
 
-            //builder.RegisterFilterProvider();  //TODO:无法通过autofac自带的方法来注册filter
+            //filter
+            //builder.RegisterFilterProvider(); //todo：使用YpDependencyResolver时此方法会报空
+            builder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
+            
+            //注册YpHnadleError
+            //全局注册
+            builder.RegisterType<YpHandleErrorAttribute>().AsExceptionFilterFor<Controller>().SingleInstance();
+            builder.RegisterType<YpAPIHandleErrorAttribute>().AsWebApiExceptionFilterFor<ApiController>().SingleInstance();
+            //单个注册
+            //builder.RegisterType<YpHandleErrorAttribute>().SingleInstance();
+            //builder.RegisterType<YpAPIHandleErrorAttribute>().SingleInstance();
+
+            //注册YpAuthorizeAttribute
+            //全局注册
+            builder.RegisterType<YpAPIAuthorizeAttribute>()
+                .AsWebApiAuthorizationFilterFor<ApiController>()
+                .PropertiesAutowired()
+                .InstancePerRequest();
+            builder.RegisterType<YpAuthorizeAttribute>()
+                .AsAuthorizationFilterFor<Controller>()
+                .PropertiesAutowired()
+                .InstancePerRequest();
+            //单个注册
+            //builder.RegisterType<YpAPIAuthorizeAttribute>().PropertiesAutowired().InstancePerRequest();
+            //builder.RegisterType<YpAuthorizeAttribute>().PropertiesAutowired().InstancePerRequest();
         }
 
         public int Order { get { return 0; } }

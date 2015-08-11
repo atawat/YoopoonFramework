@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
@@ -96,6 +98,67 @@ namespace YooPoon.Data.EntityFramework
         IQueryable<T> IRepository<T>.Table
         {
             get { return Table; }
+        }
+
+        public IDbSet<T> DbSet
+        {
+            get { return Entities; }
+        }
+
+        public void AddOrUpdate(T[] entity)
+        {
+            try
+            {
+                if(entity==null || !entity.Any())
+                    return;
+                _entities.AddOrUpdate(entity);
+
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                var msg = dbEx.EntityValidationErrors.Aggregate(string.Empty, (current1, validationErrors) => validationErrors.ValidationErrors.Aggregate(current1, (current, validationError) => current + (Environment.NewLine + string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage))));
+
+                var fail = new Exception(msg, dbEx);
+
+                throw fail;
+            }
+        }
+
+        public void BulkInsert(IEnumerable<T> entities)
+        {
+            var efDbContext = ((EfDbContext) _context);
+            try
+            {
+                efDbContext.Configuration.AutoDetectChangesEnabled = false;
+                efDbContext.Configuration.ValidateOnSaveEnabled = false;
+                var entitySet = efDbContext.Set<T>();
+                foreach (var entity in entities)
+                {
+                    entitySet.Add(entity);
+                }
+                efDbContext.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                var msg = dbEx.EntityValidationErrors.Aggregate(string.Empty,
+                    (current1, validationErrors) =>
+                        validationErrors.ValidationErrors.Aggregate(current1,
+                            (current, validationError) =>
+                                current +
+                                (Environment.NewLine +
+                                 string.Format("Property: {0} Error: {1}", validationError.PropertyName,
+                                     validationError.ErrorMessage))));
+
+                var fail = new Exception(msg, dbEx);
+
+                throw fail;
+            }
+            finally
+            {
+                efDbContext.Configuration.AutoDetectChangesEnabled = true;
+                efDbContext.Configuration.ValidateOnSaveEnabled = true;
+            }
         }
 
         public virtual IQueryable<T> Table

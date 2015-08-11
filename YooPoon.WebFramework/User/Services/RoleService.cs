@@ -35,7 +35,7 @@ namespace YooPoon.WebFramework.User.Services
         {
             try
             {
-                return _roleRepository.Table.ToList();
+                return _roleRepository.Table.Where(r=>r.RoleName != "superAdmin").ToList();
             }
             catch (Exception e)
             {
@@ -83,6 +83,19 @@ namespace YooPoon.WebFramework.User.Services
             {
                 _log.Error(e, "删除角色错误");
                 return false;
+            }
+        }
+
+        public Role GetRoleByName(string roleName)
+        {
+            try
+            {
+                return _roleRepository.Table.FirstOrDefault(c => c.RoleName == roleName);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "检测Role存在报错");
+                return null;
             }
         }
     }

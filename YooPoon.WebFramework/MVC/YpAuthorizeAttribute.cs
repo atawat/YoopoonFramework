@@ -1,7 +1,6 @@
 ﻿using System.Linq;
+using System.Web;
 using System.Web.Mvc;
-using Autofac;
-using YooPoon.Core.Autofac;
 using YooPoon.Core.Site;
 using YooPoon.WebFramework.User.Entity;
 
@@ -13,6 +12,8 @@ namespace YooPoon.WebFramework.MVC
 
         private bool IsAllowed { get; set; }
 
+        private UserBase User { get; set; }
+
         //public YpAuthorizeAttribute()
         //{
 
@@ -20,39 +21,49 @@ namespace YooPoon.WebFramework.MVC
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            var builder = new ContainerBuilder();
-            var containerManager = new ContainerManager(builder.Build());
-            WorkContext = containerManager.Resolve<IWorkContext>();
-            var user = WorkContext.CurrentUser as UserBase;
+//            var builder = new ContainerBuilder();
+//            var containerManager = new ContainerManager(builder.Build());
+//            WorkContext = containerManager.Resolve<IWorkContext>();
+            User = WorkContext.CurrentUser as UserBase;
             //用户权限判断
             //获取 controller  名称        
             var controllerName = filterContext.RouteData.Values["controller"].ToString();
             //获取 action 名称      
             var actionName = filterContext.RouteData.Values["action"].ToString();
-            if (user != null &&
-                !user.UserRoles.ToList()
+            if (User != null &&
+                !User.UserRoles.ToList()
                     .Exists(
                         ur =>
+                            ur.Role.RoleName == "superAdmin" ||
                             ur.Role.RolePermissions.ToList()
                                 .Exists(
                                     rp =>
                                         rp.IsAllowed && rp.ControllerAction.ActionName == actionName &&
                                         rp.ControllerAction.ControllerName == controllerName)))
             {
-                filterContext.HttpContext.Response.StatusCode = 403;
+                //filterContext.HttpContext.Response.StatusCode = 403;
                 IsAllowed = false;
-                //Todo:添加跳转页
+            }
+            else
+            {
+                IsAllowed = true;
             }
             base.OnAuthorization(filterContext);
         }
 
-        protected override bool AuthorizeCore(System.Web.HttpContextBase httpContext)
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            var user = WorkContext.CurrentUser as UserBase;
-            if (user == null)
+            //var user = WorkContext.CurrentUser as UserBase;
+            if (User == null)
+            {
+                httpContext.Response.StatusCode = 401;
                 return false;
+            }
             if (!IsAllowed)
+            {
+                httpContext.Response.StatusCode = 403;
                 return false;
+            }
             return true;
         }
     }
