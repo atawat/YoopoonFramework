@@ -118,6 +118,31 @@ namespace YooPoon.Data.EntityFramework
         public IList<TEntity> ExecuteStoredProcedureList<TEntity>(string commandText, params object[] parameters) where TEntity :class,IBaseEntity, new()
         {
             //add parameters to command
+            var result = ExecuteStoredProcedure<TEntity>(commandText, parameters);
+
+            bool acd = Configuration.AutoDetectChangesEnabled;
+            try
+            {
+                Configuration.AutoDetectChangesEnabled = false;
+
+                for (int i = 0; i < result.Count; i++)
+                    result[i] = AttachEntityToContext(result[i]);
+            }
+            finally
+            {
+                Configuration.AutoDetectChangesEnabled = acd;
+            }
+
+            return result;
+        }
+        /// <summary>
+        ///  Execute stores procedure and return elements of the given generic type
+        /// </summary>
+        /// <typeparam name="TEntity">The type of object returned by the procedure.</typeparam>
+        /// <param name="commandText">Command text</param>
+        /// <param name="parameters">Parameters</param>
+        public IList<TEntity> ExecuteStoredProcedure<TEntity>(string commandText, params object[] parameters)
+        {
             if (parameters != null && parameters.Length > 0)
             {
                 for (int i = 0; i <= parameters.Length - 1; i++)
@@ -136,22 +161,8 @@ namespace YooPoon.Data.EntityFramework
                     }
                 }
             }
-
+            
             var result = Database.SqlQuery<TEntity>(commandText, parameters).ToList();
-
-            bool acd = Configuration.AutoDetectChangesEnabled;
-            try
-            {
-                Configuration.AutoDetectChangesEnabled = false;
-
-                for (int i = 0; i < result.Count; i++)
-                    result[i] = AttachEntityToContext(result[i]);
-            }
-            finally
-            {
-                Configuration.AutoDetectChangesEnabled = acd;
-            }
-
             return result;
         }
 

@@ -28,6 +28,14 @@ namespace YooPoon.Data.EntityFramework
         /// <returns>Entities</returns>
         IList<TEntity> ExecuteStoredProcedureList<TEntity>(string commandText, params object[] parameters)
             where TEntity : class,IBaseEntity, new();
+        /// <summary>
+        ///  Execute stores procedure and return elements of the given generic type
+        /// </summary>
+        /// <typeparam name="TEntity">The type of object returned by the procedure.</typeparam>
+        /// <param name="commandText">Command text</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns></returns>
+        IList<TEntity> ExecuteStoredProcedure<TEntity>(string commandText, params object[] parameters);
 
         /// <summary>
         /// Creates a raw SQL query that will return elements of the given generic type.  The type can be any type that has properties that match the names of the columns returned from the query, or can be a simple primitive type. The type does not have to be an entity type. The results of this query are never tracked by the context even if the type of object returned is an entity type.

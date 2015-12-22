@@ -101,6 +101,7 @@ namespace YooPoon.Common.WC.WePay
         public string MakeSign(SortedDictionary<string,string> dic)
         {
             var urlFormatString = string.Join("&", dic.Select(d => d.Key + "=" + d.Value));
+            urlFormatString += "&key=" + Key; //拼接商户Key
             //MD5加密
             var md5 = MD5.Create();
             var bs = md5.ComputeHash(Encoding.UTF8.GetBytes(urlFormatString));

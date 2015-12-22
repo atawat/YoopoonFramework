@@ -27,6 +27,7 @@ namespace YooPoon.WebFramework.User.Entity
         Default = 0,
         ById = 1,
         ByName = 2,
-        RegTime = 3
+        RegTime = 3,
+        OrderByStatus = 4,
     }
 }

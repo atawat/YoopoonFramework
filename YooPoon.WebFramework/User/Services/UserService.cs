@@ -149,6 +149,9 @@ namespace YooPoon.WebFramework.User.Services
                                 ? query.OrderByDescending(c => c)
                                 : query.OrderBy(c => c.RegTime);
                             break;
+                        case EnumUserOrderBy.OrderByStatus:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Status) : query.OrderBy(q => q.Status);
+                            break;
                     }
                 }
                 else
