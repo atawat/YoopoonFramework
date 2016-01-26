@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using YooPoon.Core.Site;
+using YooPoon.WebFramework.Authentication.Services;
 using YooPoon.WebFramework.User.Entity;
 
 namespace YooPoon.WebFramework.MVC
@@ -11,7 +13,7 @@ namespace YooPoon.WebFramework.MVC
         private string _controllerName;
         private string _actionName;
         public IWorkContext WorkContext { get; set; }
-
+        public IControllerActionService CaService { get; set; }
         //public YpAuthorizeAttribute()
         //{
 
@@ -32,29 +34,44 @@ namespace YooPoon.WebFramework.MVC
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            var user = WorkContext.CurrentUser as UserBase;
-            if (user == null)
+            if (WorkContext.CurrentUser == null)
             {
                 httpContext.Response.StatusCode = 401;
                 return false;
             }
             //用户权限判断
-            var isAllowed = user.UserRoles.ToList()
-                .Exists(
-                    ur =>
-                        ur.Role.RoleName == "superAdmin" ||
-                        ur.Role.RolePermissions.ToList()
-                            .Exists(
-                                rp =>
-                                    rp.IsAllowed && rp.ControllerAction.ActionName == _actionName &&
-                                    rp.ControllerAction.ControllerName == _controllerName));
+            var isAllowed = DoAuthorized(((UserBase)WorkContext.CurrentUser).UserRoles.ToList(), _controllerName, _actionName);
 
-            if (!isAllowed)
-            {
-                httpContext.Response.StatusCode = 403;
+            if (isAllowed)
+                return true;
+            httpContext.Response.StatusCode = 403;
+            return false;
+        }
+
+        private bool DoAuthorized(List<UserRole> userRoles, string controllerName, string actionName)
+        {
+            if (userRoles == null || userRoles.Count == 0)
                 return false;
+            if (userRoles.Exists(ur => ur.Role.RoleName == "superAdmin"))
+                return true;
+            var controllerAction = CaService.GetControllerActionByName(controllerName, actionName);
+            if (controllerAction == null)
+                return false;
+            //            var rolePermission = userRoles.SelectMany(c => c.Role.RolePermissions).Select(c=>new{c.ControllerAction.Id,c.IsAllowed}).ToList();
+            //            rolePermission = rolePermission.Where(p=>p.Id == controllerAction.Id).ToList();
+            //            if (rolePermission.Exists(p=> p.IsAllowed))
+            //                return true;
+            var isAllowed = false;
+            foreach (var role in userRoles)
+            {
+                if (role.Role.RolePermissions.Any(permission => permission.IsAllowed && permission.ControllerAction.Id == controllerAction.Id))
+                {
+                    isAllowed = true;
+                }
+                if (isAllowed)
+                    break;
             }
-            return true;
+            return isAllowed;
         }
     }
 }
