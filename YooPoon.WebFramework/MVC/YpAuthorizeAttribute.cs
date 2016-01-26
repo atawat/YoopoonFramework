@@ -8,11 +8,9 @@ namespace YooPoon.WebFramework.MVC
 {
     public class YpAuthorizeAttribute : AuthorizeAttribute
     {
+        private string _controllerName;
+        private string _actionName;
         public IWorkContext WorkContext { get; set; }
-
-        private bool IsAllowed { get; set; }
-
-        private UserBase User { get; set; }
 
         //public YpAuthorizeAttribute()
         //{
@@ -21,45 +19,37 @@ namespace YooPoon.WebFramework.MVC
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-//            var builder = new ContainerBuilder();
-//            var containerManager = new ContainerManager(builder.Build());
-//            WorkContext = containerManager.Resolve<IWorkContext>();
-            User = WorkContext.CurrentUser as UserBase;
-            //用户权限判断
+            //var builder = new ContainerBuilder();
+            //var containerManager = new ContainerManager(builder.Build());
+            //WorkContext = containerManager.Resolve<IWorkContext>();
+            //User = WorkContext.CurrentUser as UserBase;
             //获取 controller  名称        
-            var controllerName = filterContext.RouteData.Values["controller"].ToString();
+            _controllerName = filterContext.RouteData.Values["controller"].ToString();
             //获取 action 名称      
-            var actionName = filterContext.RouteData.Values["action"].ToString();
-            if (User != null &&
-                !User.UserRoles.ToList()
-                    .Exists(
-                        ur =>
-                            ur.Role.RoleName == "superAdmin" ||
-                            ur.Role.RolePermissions.ToList()
-                                .Exists(
-                                    rp =>
-                                        rp.IsAllowed && rp.ControllerAction.ActionName == actionName &&
-                                        rp.ControllerAction.ControllerName == controllerName)))
-            {
-                //filterContext.HttpContext.Response.StatusCode = 403;
-                IsAllowed = false;
-            }
-            else
-            {
-                IsAllowed = true;
-            }
+            _actionName = filterContext.RouteData.Values["action"].ToString();
             base.OnAuthorization(filterContext);
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            //var user = WorkContext.CurrentUser as UserBase;
-            if (User == null)
+            var user = WorkContext.CurrentUser as UserBase;
+            if (user == null)
             {
                 httpContext.Response.StatusCode = 401;
                 return false;
             }
-            if (!IsAllowed)
+            //用户权限判断
+            var isAllowed = user.UserRoles.ToList()
+                .Exists(
+                    ur =>
+                        ur.Role.RoleName == "superAdmin" ||
+                        ur.Role.RolePermissions.ToList()
+                            .Exists(
+                                rp =>
+                                    rp.IsAllowed && rp.ControllerAction.ActionName == _actionName &&
+                                    rp.ControllerAction.ControllerName == _controllerName));
+
+            if (!isAllowed)
             {
                 httpContext.Response.StatusCode = 403;
                 return false;

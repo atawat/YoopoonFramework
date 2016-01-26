@@ -13,6 +13,8 @@ namespace YooPoon.WebFramework.API
 {
     public class YpAPIAuthorizeAttribute : AuthorizeAttribute, IAutofacAuthorizationFilter
     {
+        private string _actionName;
+        private string _controllerName;
         public IWorkContext WorkContext { get; set; }
 
         public IControllerActionService CaService { get; set; }
@@ -29,19 +31,11 @@ namespace YooPoon.WebFramework.API
             User = WorkContext.CurrentUser as UserBase;
             //用户权限判断
             //获取 controller  名称        
-            var controllerName = filterContext.ControllerContext.ControllerDescriptor.ControllerType.FullName;
+            _controllerName = filterContext.ControllerContext.ControllerDescriptor.ControllerType.FullName;
             //获取 action 名称      
-            var actionName = filterContext.ActionDescriptor.ActionName;
+            _actionName = filterContext.ActionDescriptor.ActionName;
 
-            if (User == null || !DoAuthorized(User.UserRoles.ToList(),controllerName,actionName))
-            {
-                //filterContext.Response.StatusCode = HttpStatusCode.Forbidden;
-                IsAllowed = false;
-            }
-            else
-            {
-                IsAllowed = true;
-            }
+
             base.OnAuthorization(filterContext);
         }
 
@@ -50,6 +44,15 @@ namespace YooPoon.WebFramework.API
             //httpContext.Response = httpContext.Request.CreateResponse();
             if (User == null)
                 return false;
+            if (User == null || !DoAuthorized(User.UserRoles.ToList(), _controllerName, _actionName))
+            {
+                //filterContext.Response.StatusCode = HttpStatusCode.Forbidden;
+                IsAllowed = false;
+            }
+            else
+            {
+                IsAllowed = true;
+            }
             if (!IsAllowed)
                 return false;
             return true;
