@@ -62,10 +62,6 @@
       <Project>{9e9ecf02-0eec-449d-8756-e1515d9f8ec8}</Project>
       <Name>YooPoon.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\YooPoon.Data\YooPoon.Data.csproj">
-      <Project>{2c74c9cf-a131-49e2-99bf-717315b46b4b}</Project>
-      <Name>YooPoon.Data</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
