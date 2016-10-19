@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Craig Duan</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://opensource.org/licenses/mit-license.php</licenseUrl>
+    <projectUrl>https://github.com/atawat/YoopoonFramework</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Provide some advanced funtions,classes for ASP.NET MVC</description>
+    <releaseNotes>Fix the bugs that case the whole logic shoot down</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+  </metadata>
+</package>
