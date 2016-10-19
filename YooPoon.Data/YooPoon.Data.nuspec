@@ -12,5 +12,8 @@
     <description>Implement the data repository and its releated logi with entity framework for SQLServer</description>
     <releaseNotes>Fix the bugs that case the whole logic shoot down</releaseNotes>
     <copyright>Copyright 2016</copyright>
+    <dependencies>
+      <dependency id="YooPoon.Core" version="1.1" />
+    </dependencies>
   </metadata>
 </package>

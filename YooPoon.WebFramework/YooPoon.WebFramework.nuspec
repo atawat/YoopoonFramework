@@ -12,5 +12,9 @@
     <description>Provide some advanced funtions,classes for ASP.NET MVC</description>
     <releaseNotes>Fix the bugs that case the whole logic shoot down</releaseNotes>
     <copyright>Copyright 2016</copyright>
+    <dependencies>
+      <dependency id="YooPoon.Core" version="1.1" />
+      <dependency id="YooPoon.Data" version="1.1" />
+    </dependencies>
   </metadata>
 </package>
