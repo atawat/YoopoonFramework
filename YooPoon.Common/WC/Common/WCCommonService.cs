@@ -18,12 +18,12 @@ namespace YooPoon.Common.WC.Common
         private string _accessToken;
         private int _tokenExpiresIn;
         private DateTime _tokenUpdTime;
-        private bool _tokenRefreshLock = false;
+        private readonly object _tokenRefreshLock = new object();
 
         private string _jsAPITicket;
         private int _ticketExpiresIn;
         private DateTime _ticketUpdTime;
-        private bool _ticketRefreshLock = false;
+        private readonly object _ticketRefreshLock = new object();
 
         public WCCommonService(ILog log, IWCHelper helper, DataSettings dataSettings)
         {
@@ -36,10 +36,15 @@ namespace YooPoon.Common.WC.Common
         {
             get
             {
-                if (!string.IsNullOrEmpty(_accessToken) && _tokenUpdTime != DateTime.MinValue && _tokenUpdTime.AddSeconds(_tokenExpiresIn) < DateTime.Now)
+                if (!string.IsNullOrEmpty(_accessToken) && _tokenUpdTime != DateTime.MinValue && _tokenUpdTime.AddSeconds(_tokenExpiresIn) > DateTime.Now)
                     return _accessToken;
-                if (!_tokenRefreshLock)
+                lock (_tokenRefreshLock)
+                {
+                    if (!string.IsNullOrEmpty(_accessToken) && _tokenUpdTime != DateTime.MinValue && _tokenUpdTime.AddSeconds(_tokenExpiresIn) > DateTime.Now)
+                        return _accessToken;
                     RefreshToken();
+                }
+
                 return _accessToken;
             }
         }
@@ -50,8 +55,13 @@ namespace YooPoon.Common.WC.Common
             {
                 if (!string.IsNullOrEmpty(_jsAPITicket) && _ticketUpdTime != DateTime.MinValue && _ticketUpdTime.AddSeconds(_ticketExpiresIn) > DateTime.Now)
                     return _jsAPITicket;
-                if (!_ticketRefreshLock)
+                lock (_ticketRefreshLock)
+                {
+                    if (!string.IsNullOrEmpty(_jsAPITicket) && _ticketUpdTime != DateTime.MinValue && _ticketUpdTime.AddSeconds(_ticketExpiresIn) > DateTime.Now)
+                        return _jsAPITicket;
                     RefreshTicket();
+                }
+
                 return _jsAPITicket;
             }
         }
@@ -77,7 +87,6 @@ namespace YooPoon.Common.WC.Common
         /// </summary>
         public void RefreshToken()
         {
-            _tokenRefreshLock = true;
             var param = new Dictionary<string, string>
             {
                 {"grant_type", "client_credential"},
@@ -104,12 +113,10 @@ namespace YooPoon.Common.WC.Common
                 var errorJson = JsonConvert.DeserializeAnonymousType(reponseStr, responseErrorObj);
                 _log.Error("获取AccessToken出错，错误代码{0}，错误信息：{1}", errorJson.errcode, errorJson.errmsg);
             }
-            _tokenRefreshLock = false;
         }
 
         private void RefreshTicket()
         {
-            _ticketRefreshLock = true;
             var param = new Dictionary<string, string>
             {
                 {"access_token", AccessToken},
@@ -134,7 +141,6 @@ namespace YooPoon.Common.WC.Common
             {
                 _log.Error("获取AccessToken出错，错误代码{0}，错误信息：{1}", responseJson.errcode, responseJson.errmsg);
             }
-            _ticketRefreshLock = false;
         }
 
         public string MakeSign(SortedDictionary<string, string> dic)
