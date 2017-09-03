@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json;
+using YooPoon.Common.WC.Entities;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 
@@ -18,12 +19,12 @@ namespace YooPoon.Common.WC.Common
         private string _accessToken;
         private int _tokenExpiresIn;
         private DateTime _tokenUpdTime;
-        private bool _tokenRefreshLock = false;
+        private readonly object _tokenRefreshLock = new object();
 
         private string _jsAPITicket;
         private int _ticketExpiresIn;
         private DateTime _ticketUpdTime;
-        private bool _ticketRefreshLock = false;
+        private readonly object _ticketRefreshLock = new object();
 
         public WCCommonService(ILog log, IWCHelper helper, DataSettings dataSettings)
         {
@@ -36,11 +37,27 @@ namespace YooPoon.Common.WC.Common
         {
             get
             {
-                if (!string.IsNullOrEmpty(_accessToken) && _tokenUpdTime != DateTime.MinValue && _tokenUpdTime.AddSeconds(_tokenExpiresIn) < DateTime.Now)
+                if (!string.IsNullOrEmpty(_accessToken) && _tokenUpdTime != DateTime.MinValue && _tokenUpdTime.AddSeconds(_tokenExpiresIn) > DateTime.Now)
                     return _accessToken;
-                if (!_tokenRefreshLock)
+                lock (_tokenRefreshLock)
+                {
+                    if (!string.IsNullOrEmpty(_accessToken) && _tokenUpdTime != DateTime.MinValue && _tokenUpdTime.AddSeconds(_tokenExpiresIn) > DateTime.Now)
+                        return _accessToken;
                     RefreshToken();
+                }
+
                 return _accessToken;
+            }
+        }
+
+        /// <summary>
+        /// 用户自己配置的消息服务器Token
+        /// </summary>
+        public string Token
+        {
+            get
+            {
+                return _dataSettings.RawDataSettings["Token"];
             }
         }
 
@@ -50,8 +67,13 @@ namespace YooPoon.Common.WC.Common
             {
                 if (!string.IsNullOrEmpty(_jsAPITicket) && _ticketUpdTime != DateTime.MinValue && _ticketUpdTime.AddSeconds(_ticketExpiresIn) > DateTime.Now)
                     return _jsAPITicket;
-                if (!_ticketRefreshLock)
+                lock (_ticketRefreshLock)
+                {
+                    if (!string.IsNullOrEmpty(_jsAPITicket) && _ticketUpdTime != DateTime.MinValue && _ticketUpdTime.AddSeconds(_ticketExpiresIn) > DateTime.Now)
+                        return _jsAPITicket;
                     RefreshTicket();
+                }
+
                 return _jsAPITicket;
             }
         }
@@ -77,7 +99,6 @@ namespace YooPoon.Common.WC.Common
         /// </summary>
         public void RefreshToken()
         {
-            _tokenRefreshLock = true;
             var param = new Dictionary<string, string>
             {
                 {"grant_type", "client_credential"},
@@ -92,7 +113,7 @@ namespace YooPoon.Common.WC.Common
             }
             var responseObj = new { access_token = "", expires_in = 0 };
             var responseJson = JsonConvert.DeserializeAnonymousType(reponseStr, responseObj);
-            if (responseJson != null)
+            if (responseJson.access_token != null)
             {
                 _accessToken = responseJson.access_token;
                 _tokenExpiresIn = responseJson.expires_in;
@@ -100,16 +121,13 @@ namespace YooPoon.Common.WC.Common
             }
             else
             {
-                var responseErrorObj = new { errcode = "", errmsg = "" };
-                var errorJson = JsonConvert.DeserializeAnonymousType(reponseStr, responseErrorObj);
-                _log.Error("获取AccessToken出错，错误代码{0}，错误信息：{1}", errorJson.errcode, errorJson.errmsg);
+                var errorJson = JsonConvert.DeserializeObject<MessageResultModel>(reponseStr);
+                _log.Error("获取AccessToken出错，错误代码{0}，错误信息：{1}", errorJson.Errcode, errorJson.ErrMsg);
             }
-            _tokenRefreshLock = false;
         }
 
         private void RefreshTicket()
         {
-            _ticketRefreshLock = true;
             var param = new Dictionary<string, string>
             {
                 {"access_token", AccessToken},
@@ -118,7 +136,7 @@ namespace YooPoon.Common.WC.Common
             var reponseStr = _helper.SendGet("https://api.weixin.qq.com/cgi-bin/ticket/getticket", param);
             if (reponseStr == null)
             {
-                _log.Error("获取AccessToken出错，请检查错误");
+                _log.Error("获取JsAPITicket出错，请检查错误");
                 return;
             }
             //Response容器
@@ -132,9 +150,8 @@ namespace YooPoon.Common.WC.Common
             }
             else
             {
-                _log.Error("获取AccessToken出错，错误代码{0}，错误信息：{1}", responseJson.errcode, responseJson.errmsg);
+                _log.Error("获取JsAPITicket出错，错误代码{0}，错误信息：{1}", responseJson.errcode, responseJson.errmsg);
             }
-            _ticketRefreshLock = false;
         }
 
         public string MakeSign(SortedDictionary<string, string> dic)
@@ -152,19 +169,117 @@ namespace YooPoon.Common.WC.Common
             return sb.ToString().ToUpper();
         }
 
+        #region 获取用户信息
+
+        /// <summary>
+        /// 网页授权OAuth获取用户信息（认证的服务号）
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public OAuthAccessToken GetOAuthAccessToken(string code)
         {
             if (string.IsNullOrEmpty(code))
                 return null;
             var param = new Dictionary<string, string>()
             {
-                {"appid",AppId},
-                {"secret",AppSecret},
-                {"code",code},
-                {"grant_type","authorization_code"}
+                {"appid", AppId},
+                {"secret", AppSecret},
+                {"code", code},
+                {"grant_type", "authorization_code"}
             };
             var response = _helper.SendGet("https://api.weixin.qq.com/sns/oauth2/access_token", param);
             return JsonConvert.DeserializeObject<OAuthAccessToken>(response);
         }
+
+        /// <summary>
+        /// 获取已关注公众号的用户的个人信息
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <param name="lang"></param>
+        public UserInfo GetUserInfo(string openId, string lang = "zh_CN")
+        {
+            if (string.IsNullOrEmpty(openId))
+            {
+                return null;
+            }
+            var param = new Dictionary<string, string>()
+            {
+                {"access_token", AccessToken},
+                {"openid", openId },
+                {"lang", lang }
+            };
+
+            var response = _helper.SendGet("https://api.weixin.qq.com/cgi-bin/user/info", param);
+            var result = JsonConvert.DeserializeObject<UserInfo>(response);
+            if (result.errcode != 0)
+            {
+                _log.Error("获取用户信息出错，错误代码{0}，错误信息：{1}", result.errcode, result.errmsg);
+                return null;
+            }
+            else
+            {
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 批量获取用户基本信息（最多支持一次拉取100条）
+        /// </summary>
+        /// <param name="openIds"></param>
+        /// <param name="lang"></param>
+        /// <returns></returns>
+        public UserInfoList GetUsersInfo(List<string> openIds, string lang = "zh-CN")
+        {
+            var users = openIds.Select(o => new { openid = o, lang = lang }).ToArray();
+            var postData = new { user_list = users };
+            var postDataJson = JsonConvert.SerializeObject(postData);
+
+            var response = _helper.SendPost(string.Format("https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token={0}", AccessToken), postDataJson, null);
+            var result = JsonConvert.DeserializeObject<UserInfoList>(response);
+            if (result.errcode != 0)
+            {
+                _log.Error("批量获取用户基本信息出错，错误代码{0}，错误信息：{1}", result.errcode, result.errmsg);
+                return null;
+            }
+            else
+            {
+                return result;
+            }
+        }
+
+        #endregion
+
+        #region 微信登录
+
+        /// <summary>
+        /// 检查签名(微信认证)
+        /// </summary>
+        /// <param name="signature"></param>
+        /// <param name="timestamp"></param>
+        /// <param name="nonce"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public bool CheckSignature(string signature, string timestamp, string nonce, string token = null)
+        {
+            return signature == GetSignature(timestamp, nonce, token);
+        }
+
+        public string GetSignature(string timestamp, string nonce, string token = null)
+        {
+            token = token ?? Token;
+            var arr = new[] { token, timestamp, nonce }.OrderBy(z => z).ToArray();
+            var arrString = string.Join("", arr);
+            var sha1 = SHA1.Create();
+            var sha1Arr = sha1.ComputeHash(Encoding.UTF8.GetBytes(arrString));
+            StringBuilder sb = new StringBuilder();
+            foreach (var b in sha1Arr)
+            {
+                sb.AppendFormat("{0:x2}", b);
+            }
+
+            return sb.ToString();
+        }
+
+        #endregion
     }
 }

@@ -6,7 +6,7 @@ namespace YooPoon.Common.WC.Common
     public interface IWCHelper:ISingletonDependency
     {
         string SendGet(string url, Dictionary<string, string> paramsDic);
-        string SendPost(string url, string postData);
+        string SendPost(string url, string postData,string contentType);
 
         string ConvertToXml(SortedDictionary<string, string> dic);
 

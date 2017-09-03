@@ -92,7 +92,7 @@ namespace YooPoon.Common.WC.WePay
 
             dic.Add("sign", MakeSign(dic));
             var xml = _helper.ConvertToXml(dic);
-            var response = _helper.SendPost(url, xml);
+            var response = _helper.SendPost(url, xml,null);
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(response);
             return xmlDoc;

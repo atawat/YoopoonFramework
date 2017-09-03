@@ -6,6 +6,9 @@ namespace YooPoon.Common.WC.Common
     public interface IWCCommonService:ISingletonDependency
     {
         string AccessToken { get; }
+
+        string Token { get; }
+
         string JsAPITicket { get; }
         string AppId { get; }
 
@@ -19,5 +22,7 @@ namespace YooPoon.Common.WC.Common
         string MakeSign(SortedDictionary<string, string> dic);
 
         OAuthAccessToken GetOAuthAccessToken(string code);
+
+        bool CheckSignature(string signature, string timestamp, string nonce, string token = null);
     }
 }

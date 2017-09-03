@@ -157,3 +157,4 @@ $RECYCLE.BIN/
 /Web/*.user
 /.vs/config
 *.nupkg
+/YP.CodeGen/DesignExcel/*.xlsx

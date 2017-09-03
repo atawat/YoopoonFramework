@@ -45,13 +45,9 @@ namespace YooPoon.Common.WC.Common
                 using (responseStream)
                 {
                     if (responseStream != null)
-                        using (var reader = new StreamReader(responseStream, Encoding.UTF8))
-                        {
-                            responseString = reader.ReadToEnd();
-                        }
-                    else
+                    using (var reader = new StreamReader(responseStream, Encoding.UTF8))
                     {
-                        return null;
+                        responseString = reader.ReadToEnd();
                     }
                 }
                 return responseString;
@@ -59,21 +55,21 @@ namespace YooPoon.Common.WC.Common
             catch (Exception e)
             {
                 _log.Error(e,"微信服务发送HttpGet出错");
-                return null;
+                return "";
             }
         }
 
-        public string SendPost(string url, string postData)
+        public string SendPost(string url, string postData,string contentType)
         {
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = WebRequestMethods.Http.Post;
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = Encoding.UTF8.GetByteCount(postData);
+                request.ContentType = string.IsNullOrEmpty(contentType)?"application/x-www-form-urlencoded":contentType;
+                //request.ContentLength = Encoding.UTF8.GetByteCount(postData);  //使用requestsream写入不需要指定request的length
 
                 Stream myRequestStream = request.GetRequestStream();
-                using (var myStreamWriter = new StreamWriter(myRequestStream, Encoding.UTF8))
+                using (var myStreamWriter = new StreamWriter(myRequestStream))
                 {
                     myStreamWriter.Write(postData);
                 }
@@ -85,13 +81,9 @@ namespace YooPoon.Common.WC.Common
                 using (var myResponseStream = response.GetResponseStream())
                 {
                     if (myResponseStream != null)
-                        using (var myStreamReader = new StreamReader(myResponseStream, Encoding.UTF8))
-                        {
-                            retString = myStreamReader.ReadToEnd();
-                        }
-                    else
+                    using (var myStreamReader = new StreamReader(myResponseStream))
                     {
-                        return null;
+                        retString = myStreamReader.ReadToEnd();
                     }
                 }
 
@@ -100,7 +92,7 @@ namespace YooPoon.Common.WC.Common
             catch (Exception e)
             {
                 _log.Error(e, "微信服务发送HttpPost出错");
-                return null;
+                return "";
             }
 
         }
